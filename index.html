@@ -317,15 +317,16 @@ function buildExam(){
     container.innerHTML='';
     questions.forEach(q=>{
       const shuffledOpts=shuffle(q.opts);
-      examOrder[qNum]={question:q,shuffledOpts};
+      const currentQ = qNum;
+      examOrder[currentQ]={question:q,shuffledOpts};
       const block=document.createElement('div');
       block.className='question-block';
       const letters=['A','B','C','D'];
-      block.innerHTML=`<div class="q-number">Question ${qNum}</div>
+      block.innerHTML=`<div class="q-number">Question ${currentQ}</div>
         <div class="q-text">${q.text}</div>
-        <div class="options" id="opts_${qNum}">
+        <div class="options" id="opts_${currentQ}">
           ${shuffledOpts.map((opt,i)=>`
-            <div class="opt" onclick="window.pick(${qNum},${i})">
+            <div class="opt" data-q="${currentQ}" data-i="${i}">
               <span class="opt-letter">${letters[i]}</span>
               <span class="opt-text">${opt}</span>
             </div>`).join('')}
@@ -349,6 +350,15 @@ window.pick=function(qNum,optIndex){
   });
   document.getElementById('answeredCount').textContent=Object.keys(answers).length;
 };
+
+// Event delegation — handles all option clicks safely
+document.getElementById('examScreen').addEventListener('click',function(e){
+  const opt=e.target.closest('.opt[data-q]');
+  if(!opt)return;
+  const qNum=parseInt(opt.dataset.q);
+  const optIndex=parseInt(opt.dataset.i);
+  window.pick(qNum,optIndex);
+});
 
 function startTimer(){
   timerInterval=setInterval(()=>{
