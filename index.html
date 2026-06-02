@@ -326,7 +326,7 @@ function buildExam(){
         <div class="q-text">${q.text}</div>
         <div class="options" id="opts_${currentQ}">
           ${shuffledOpts.map((opt,i)=>`
-            <div class="opt" data-q="${currentQ}" data-i="${i}">
+            <div class="opt" data-q="${currentQ}" data-i="${i}" onclick="window.pick(${currentQ},${i})">
               <span class="opt-letter">${letters[i]}</span>
               <span class="opt-text">${opt}</span>
             </div>`).join('')}
@@ -341,24 +341,19 @@ function buildExam(){
   renderBlock(r2,'readingBlock2');
 }
 
+
 window.pick=function(qNum,optIndex){
-  const{shuffledOpts}=examOrder[qNum];
-  const val=shuffledOpts[optIndex];
+  if(!examOrder[qNum])return;
+  const val=examOrder[qNum].shuffledOpts[optIndex];
   answers[qNum]=val;
-  document.querySelectorAll('#opts_'+qNum+' .opt').forEach((o,i)=>{
-    o.classList.toggle('selected',i===optIndex);
+  const container=document.getElementById('opts_'+qNum);
+  if(!container)return;
+  container.querySelectorAll('.opt').forEach(function(o,i){
+    if(i===optIndex){o.classList.add('selected');}
+    else{o.classList.remove('selected');}
   });
   document.getElementById('answeredCount').textContent=Object.keys(answers).length;
 };
-
-// Event delegation — handles all option clicks safely
-document.getElementById('examScreen').addEventListener('click',function(e){
-  const opt=e.target.closest('.opt[data-q]');
-  if(!opt)return;
-  const qNum=parseInt(opt.dataset.q);
-  const optIndex=parseInt(opt.dataset.i);
-  window.pick(qNum,optIndex);
-});
 
 function startTimer(){
   timerInterval=setInterval(()=>{
