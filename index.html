@@ -12,21 +12,17 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .brand{display:flex;align-items:center;gap:10px;padding:18px 32px;background:#fff;border-bottom:1px solid #e8e4db}
 .brand-name{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a1a}
 .brand-sub{font-size:12px;color:#888;letter-spacing:0.5px}
-
-/* LOGIN */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 61px);padding:2rem}
 .login-card{background:#fff;border-radius:16px;padding:2.5rem;width:100%;max-width:420px;border:1px solid #e8e4db}
-.login-card h2{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:6px;color:#1a1a1a}
+.login-card h2{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:6px}
 .login-card p{font-size:13px;color:#888;margin-bottom:2rem}
 .form-group{margin-bottom:1.25rem}
 .form-group label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px;letter-spacing:0.3px;text-transform:uppercase}
-.form-group input{width:100%;padding:11px 14px;border:1.5px solid #e8e4db;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:#fafaf8;transition:border-color 0.2s;color:#1a1a1a}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid #e8e4db;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:#fafaf8;color:#1a1a1a;transition:border-color 0.2s}
 .form-group input:focus{outline:none;border-color:#2d6a4f;background:#fff}
 .login-btn{width:100%;padding:13px;background:#2d6a4f;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background 0.2s;margin-top:0.5rem}
 .login-btn:hover{background:#235a41}
 .login-error{display:none;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:12px}
-
-/* EXAM */
 #examScreen{display:none;max-width:740px;margin:0 auto;padding:2rem 1.5rem 4rem}
 .exam-header{background:#fff;border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;border:1px solid #e8e4db;display:flex;align-items:center;justify-content:space-between}
 .exam-header h1{font-family:'DM Serif Display',serif;font-size:24px}
@@ -36,24 +32,20 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .timer.warning{color:#dc2626;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 .timer-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.5px}
-
 .student-badge{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 16px;font-size:13px;color:#166534;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
-
 .section-header{background:#2d6a4f;color:#fff;border-radius:12px;padding:12px 20px;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
 .section-header h2{font-size:15px;font-weight:600;letter-spacing:0.3px}
 .section-pts{font-size:12px;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:20px}
 .section-instructions{font-size:13px;color:#666;margin-bottom:1.25rem;padding:0 4px;line-height:1.6}
-
 .audio-card{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
-.audio-title{font-weight:600;font-size:14px;margin-bottom:12px;color:#1a1a1a}
-.audio-player{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.audio-title{font-weight:600;font-size:14px;margin-bottom:8px;color:#1a1a1a}
+.audio-script{background:#f5f3ee;border-radius:10px;padding:12px 14px;font-size:13px;color:#444;line-height:1.8;margin-bottom:14px;border-left:3px solid #2d6a4f}
+.audio-player{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .play-btn{display:flex;align-items:center;gap:8px;padding:9px 20px;background:#2d6a4f;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
 .play-btn:hover{background:#235a41}
 .play-btn:disabled{background:#d1d5db;cursor:not-allowed}
 .play-btn.playing{background:#1a3f2e}
 .play-info{font-size:12px;color:#888}
-.audio-file-note{font-size:12px;color:#f59e0b;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;margin-bottom:12px}
-
 .question-block{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.25rem 1.5rem;margin-bottom:12px}
 .q-number{font-size:11px;font-weight:700;color:#2d6a4f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
 .q-text{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:12px;line-height:1.5}
@@ -64,19 +56,14 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#666;flex-shrink:0;transition:all 0.15s}
 .opt.selected .opt-letter{background:#2d6a4f;border-color:#2d6a4f;color:#fff}
 .opt-text{font-size:13px;color:#1a1a1a}
-
 .reading-passage{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.5rem;margin-bottom:1.25rem}
 .passage-title{font-weight:700;font-size:14px;color:#2d6a4f;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #e8e4db}
 .passage-text{font-size:14px;line-height:1.9;color:#333}
-
 .submit-zone{background:#fff;border-radius:16px;border:1px solid #e8e4db;padding:2rem;text-align:center;margin-top:2rem}
 .answered-count{font-size:13px;color:#888;margin-bottom:1rem}
 .answered-count span{font-weight:700;color:#2d6a4f}
 .submit-btn{padding:14px 48px;background:#2d6a4f;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
 .submit-btn:hover{background:#235a41;transform:translateY(-1px)}
-.submit-btn:disabled{background:#d1d5db;cursor:not-allowed;transform:none}
-
-/* RESULTS */
 #resultsScreen{display:none;max-width:600px;margin:0 auto;padding:3rem 1.5rem}
 .result-card{background:#fff;border-radius:20px;border:1px solid #e8e4db;padding:2.5rem;text-align:center}
 .result-card h2{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px}
@@ -92,12 +79,10 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .result-badge{display:inline-block;padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;margin-top:0.5rem}
 .badge-pass{background:#dcfce7;color:#166534}
 .badge-fail{background:#fee2e2;color:#991b1b}
-
 .divider{border:none;border-top:1px solid #e8e4db;margin:2rem 0}
 </style>
 </head>
 <body>
-
 <div class="brand">
   <div>
     <div class="brand-name">Tweetalig</div>
@@ -105,7 +90,6 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   </div>
 </div>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-card">
     <h2>Examen Final B1.1</h2>
@@ -123,7 +107,6 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   </div>
 </div>
 
-<!-- EXAM -->
 <div id="examScreen">
   <div class="exam-header">
     <div>
@@ -135,27 +118,22 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
       <div class="timer-label">Tiempo restante</div>
     </div>
   </div>
+  <div class="student-badge">👤 <span id="studentNameDisplay"></span></div>
 
-  <div class="student-badge" id="studentBadge">
-    👤 <span id="studentNameDisplay"></span>
-  </div>
-
-  <!-- SECTION 1: LISTENING -->
   <div class="section-header">
     <h2>Section 1 – Listening</h2>
     <span class="section-pts">10 points</span>
   </div>
   <p class="section-instructions">Listen carefully to each audio twice and choose the correct answer.</p>
 
-  <!-- Audio 1 -->
+  <!-- AUDIO 1 -->
   <div class="audio-card">
     <div class="audio-title">🎧 Audio 1 – "A New Job"</div>
-    <div id="audio1NoFile" class="audio-file-note" style="display:none">⚠️ Audio not uploaded yet. Contact your teacher.</div>
     <div class="audio-player">
       <button class="play-btn" id="playBtn1" onclick="playAudio(1)">▶ Play Audio 1</button>
       <span class="play-info" id="playInfo1">Plays remaining: 2</span>
     </div>
-    <audio id="audioEl1" onended="audioEnded(1)"></audio>
+    <audio id="audioEl1" src="audio1.mp3" onended="audioEnded(1)"></audio>
   </div>
 
   <div class="question-block"><div class="q-number">Question 1</div><div class="q-text">When did Mark start his new job?</div><div class="options" id="o1">
@@ -172,67 +150,66 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="opt" onclick="pick(2,'D')"><span class="opt-letter">D</span><span class="opt-text">A bank</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 3</div><div class="q-text">What does Mark do?</div><div class="options" id="o3">
+  <div class="question-block"><div class="q-number">Question 3</div><div class="q-text">What does Mark do at the company?</div><div class="options" id="o3">
     <div class="opt" onclick="pick(3,'A')"><span class="opt-letter">A</span><span class="opt-text">Marketing</span></div>
     <div class="opt" onclick="pick(3,'B')"><span class="opt-letter">B</span><span class="opt-text">Customer service</span></div>
     <div class="opt" onclick="pick(3,'C')"><span class="opt-letter">C</span><span class="opt-text">Sales</span></div>
     <div class="opt" onclick="pick(3,'D')"><span class="opt-letter">D</span><span class="opt-text">Teaching</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 4</div><div class="q-text">How many days does he work from home?</div><div class="options" id="o4">
+  <div class="question-block"><div class="q-number">Question 4</div><div class="q-text">How many days a week does Mark work from home?</div><div class="options" id="o4">
     <div class="opt" onclick="pick(4,'A')"><span class="opt-letter">A</span><span class="opt-text">One</span></div>
     <div class="opt" onclick="pick(4,'B')"><span class="opt-letter">B</span><span class="opt-text">Two</span></div>
     <div class="opt" onclick="pick(4,'C')"><span class="opt-letter">C</span><span class="opt-text">Three</span></div>
     <div class="opt" onclick="pick(4,'D')"><span class="opt-letter">D</span><span class="opt-text">Five</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 5</div><div class="q-text">Why does Mark like the job?</div><div class="options" id="o5">
-    <div class="opt" onclick="pick(5,'A')"><span class="opt-letter">A</span><span class="opt-text">The salary is higher</span></div>
-    <div class="opt" onclick="pick(5,'B')"><span class="opt-letter">B</span><span class="opt-text">He travels more</span></div>
-    <div class="opt" onclick="pick(5,'C')"><span class="opt-letter">C</span><span class="opt-text">He has more free time</span></div>
-    <div class="opt" onclick="pick(5,'D')"><span class="opt-letter">D</span><span class="opt-text">The office is bigger</span></div>
+  <div class="question-block"><div class="q-number">Question 5</div><div class="q-text">What is Mark's favourite part of the new job?</div><div class="options" id="o5">
+    <div class="opt" onclick="pick(5,'A')"><span class="opt-letter">A</span><span class="opt-text">The higher salary</span></div>
+    <div class="opt" onclick="pick(5,'B')"><span class="opt-letter">B</span><span class="opt-text">Travelling more</span></div>
+    <div class="opt" onclick="pick(5,'C')"><span class="opt-letter">C</span><span class="opt-text">More free time in the evenings</span></div>
+    <div class="opt" onclick="pick(5,'D')"><span class="opt-letter">D</span><span class="opt-text">A bigger office</span></div>
   </div></div>
 
-  <!-- Audio 2 -->
+  <!-- AUDIO 2 -->
   <div class="audio-card" style="margin-top:2rem">
     <div class="audio-title">🎧 Audio 2 – "Healthy Lifestyle"</div>
-    <div id="audio2NoFile" class="audio-file-note" style="display:none">⚠️ Audio not uploaded yet. Contact your teacher.</div>
     <div class="audio-player">
       <button class="play-btn" id="playBtn2" onclick="playAudio(2)">▶ Play Audio 2</button>
       <span class="play-info" id="playInfo2">Plays remaining: 2</span>
     </div>
-    <audio id="audioEl2" onended="audioEnded(2)"></audio>
+    <audio id="audioEl2" src="audio2.mp3" onended="audioEnded(2)"></audio>
   </div>
 
-  <div class="question-block"><div class="q-number">Question 6</div><div class="q-text">How many hours should people sleep?</div><div class="options" id="o6">
+  <div class="question-block"><div class="q-number">Question 6</div><div class="q-text">How many hours of sleep do doctors recommend?</div><div class="options" id="o6">
     <div class="opt" onclick="pick(6,'A')"><span class="opt-letter">A</span><span class="opt-text">Five</span></div>
     <div class="opt" onclick="pick(6,'B')"><span class="opt-letter">B</span><span class="opt-text">Six</span></div>
     <div class="opt" onclick="pick(6,'C')"><span class="opt-letter">C</span><span class="opt-text">Seven</span></div>
     <div class="opt" onclick="pick(6,'D')"><span class="opt-letter">D</span><span class="opt-text">Ten</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 7</div><div class="q-text">What should people drink during the day?</div><div class="options" id="o7">
+  <div class="question-block"><div class="q-number">Question 7</div><div class="q-text">What should people drink enough of during the day?</div><div class="options" id="o7">
     <div class="opt" onclick="pick(7,'A')"><span class="opt-letter">A</span><span class="opt-text">Coffee</span></div>
     <div class="opt" onclick="pick(7,'B')"><span class="opt-letter">B</span><span class="opt-text">Water</span></div>
     <div class="opt" onclick="pick(7,'C')"><span class="opt-letter">C</span><span class="opt-text">Juice</span></div>
     <div class="opt" onclick="pick(7,'D')"><span class="opt-letter">D</span><span class="opt-text">Soda</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 8</div><div class="q-text">What activity is mentioned?</div><div class="options" id="o8">
+  <div class="question-block"><div class="q-number">Question 8</div><div class="q-text">Which activity is mentioned as good for your health?</div><div class="options" id="o8">
     <div class="opt" onclick="pick(8,'A')"><span class="opt-letter">A</span><span class="opt-text">Swimming</span></div>
     <div class="opt" onclick="pick(8,'B')"><span class="opt-letter">B</span><span class="opt-text">Running</span></div>
     <div class="opt" onclick="pick(8,'C')"><span class="opt-letter">C</span><span class="opt-text">Dancing</span></div>
     <div class="opt" onclick="pick(8,'D')"><span class="opt-letter">D</span><span class="opt-text">Cycling</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 9</div><div class="q-text">What can affect sleep quality?</div><div class="options" id="o9">
+  <div class="question-block"><div class="q-number">Question 9</div><div class="q-text">What should people reduce before sleeping?</div><div class="options" id="o9">
     <div class="opt" onclick="pick(9,'A')"><span class="opt-letter">A</span><span class="opt-text">Television</span></div>
     <div class="opt" onclick="pick(9,'B')"><span class="opt-letter">B</span><span class="opt-text">Exercise</span></div>
     <div class="opt" onclick="pick(9,'C')"><span class="opt-letter">C</span><span class="opt-text">Screen time</span></div>
     <div class="opt" onclick="pick(9,'D')"><span class="opt-letter">D</span><span class="opt-text">Noise</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 10</div><div class="q-text">What is the topic mainly about?</div><div class="options" id="o10">
+  <div class="question-block"><div class="q-number">Question 10</div><div class="q-text">What is the audio mainly about?</div><div class="options" id="o10">
     <div class="opt" onclick="pick(10,'A')"><span class="opt-letter">A</span><span class="opt-text">Technology</span></div>
     <div class="opt" onclick="pick(10,'B')"><span class="opt-letter">B</span><span class="opt-text">Healthy habits</span></div>
     <div class="opt" onclick="pick(10,'C')"><span class="opt-letter">C</span><span class="opt-text">Sports competitions</span></div>
@@ -241,7 +218,6 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
   <hr class="divider">
 
-  <!-- SECTION 2: READING -->
   <div class="section-header">
     <h2>Section 2 – Reading</h2>
     <span class="section-pts">15 points</span>
@@ -253,7 +229,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="passage-text">Sofia and her friends decided to spend the weekend at the beach. On Saturday morning, they traveled by bus for two hours. The weather was sunny and warm, so they spent most of the day swimming and playing volleyball.<br><br>At night, they had dinner at a small restaurant near the hotel. Sofia said the seafood was delicious.<br><br>On Sunday afternoon, they returned home feeling relaxed and happy.</div>
   </div>
 
-  <div class="question-block"><div class="q-number">Question 11</div><div class="q-text">Where did Sofia go?</div><div class="options" id="o11">
+  <div class="question-block"><div class="q-number">Question 11</div><div class="q-text">Where did Sofia and her friends go?</div><div class="options" id="o11">
     <div class="opt" onclick="pick(11,'A')"><span class="opt-letter">A</span><span class="opt-text">To the mountains</span></div>
     <div class="opt" onclick="pick(11,'B')"><span class="opt-letter">B</span><span class="opt-text">To the countryside</span></div>
     <div class="opt" onclick="pick(11,'C')"><span class="opt-letter">C</span><span class="opt-text">To the beach</span></div>
@@ -267,7 +243,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="opt" onclick="pick(12,'D')"><span class="opt-letter">D</span><span class="opt-text">By plane</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 13</div><div class="q-text">What did they do during the day?</div><div class="options" id="o13">
+  <div class="question-block"><div class="q-number">Question 13</div><div class="q-text">What did they do during the day at the beach?</div><div class="options" id="o13">
     <div class="opt" onclick="pick(13,'A')"><span class="opt-letter">A</span><span class="opt-text">Shopping</span></div>
     <div class="opt" onclick="pick(13,'B')"><span class="opt-letter">B</span><span class="opt-text">Studying</span></div>
     <div class="opt" onclick="pick(13,'C')"><span class="opt-letter">C</span><span class="opt-text">Swimming and volleyball</span></div>
@@ -288,7 +264,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="opt" onclick="pick(15,'D')"><span class="opt-letter">D</span><span class="opt-text">Bored</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 16</div><div class="q-text">How was the weather?</div><div class="options" id="o16">
+  <div class="question-block"><div class="q-number">Question 16</div><div class="q-text">How was the weather at the beach?</div><div class="options" id="o16">
     <div class="opt" onclick="pick(16,'A')"><span class="opt-letter">A</span><span class="opt-text">Rainy</span></div>
     <div class="opt" onclick="pick(16,'B')"><span class="opt-letter">B</span><span class="opt-text">Cold</span></div>
     <div class="opt" onclick="pick(16,'C')"><span class="opt-letter">C</span><span class="opt-text">Sunny and warm</span></div>
@@ -316,21 +292,21 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="opt" onclick="pick(18,'D')"><span class="opt-letter">D</span><span class="opt-text">They are easier</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 19</div><div class="q-text">What do some students miss?</div><div class="options" id="o19">
+  <div class="question-block"><div class="q-number">Question 19</div><div class="q-text">What do some students miss about in-person classes?</div><div class="options" id="o19">
     <div class="opt" onclick="pick(19,'A')"><span class="opt-letter">A</span><span class="opt-text">Homework</span></div>
     <div class="opt" onclick="pick(19,'B')"><span class="opt-letter">B</span><span class="opt-text">Transportation</span></div>
     <div class="opt" onclick="pick(19,'C')"><span class="opt-letter">C</span><span class="opt-text">Face-to-face interaction</span></div>
     <div class="opt" onclick="pick(19,'D')"><span class="opt-letter">D</span><span class="opt-text">Exams</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 20</div><div class="q-text">What problem is mentioned?</div><div class="options" id="o20">
+  <div class="question-block"><div class="q-number">Question 20</div><div class="q-text">What technical problem is mentioned in the text?</div><div class="options" id="o20">
     <div class="opt" onclick="pick(20,'A')"><span class="opt-letter">A</span><span class="opt-text">Noise</span></div>
-    <div class="opt" onclick="pick(20,'B')"><span class="opt-letter">B</span><span class="opt-text">Internet problems</span></div>
+    <div class="opt" onclick="pick(20,'B')"><span class="opt-letter">B</span><span class="opt-text">Internet connection problems</span></div>
     <div class="opt" onclick="pick(20,'C')"><span class="opt-letter">C</span><span class="opt-text">Transportation</span></div>
     <div class="opt" onclick="pick(20,'D')"><span class="opt-letter">D</span><span class="opt-text">Teachers</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 21</div><div class="q-text">What continues growing?</div><div class="options" id="o21">
+  <div class="question-block"><div class="q-number">Question 21</div><div class="q-text">What continues growing around the world?</div><div class="options" id="o21">
     <div class="opt" onclick="pick(21,'A')"><span class="opt-letter">A</span><span class="opt-text">Television</span></div>
     <div class="opt" onclick="pick(21,'B')"><span class="opt-letter">B</span><span class="opt-text">Sports</span></div>
     <div class="opt" onclick="pick(21,'C')"><span class="opt-letter">C</span><span class="opt-text">Online education</span></div>
@@ -344,21 +320,21 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="opt" onclick="pick(22,'D')"><span class="opt-letter">D</span><span class="opt-text">Transportation systems</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 23</div><div class="q-text">Where can students study from?</div><div class="options" id="o23">
+  <div class="question-block"><div class="q-number">Question 23</div><div class="q-text">Where can students study when taking online classes?</div><div class="options" id="o23">
     <div class="opt" onclick="pick(23,'A')"><span class="opt-letter">A</span><span class="opt-text">Libraries only</span></div>
-    <div class="opt" onclick="pick(23,'B')"><span class="opt-letter">B</span><span class="opt-text">Home</span></div>
+    <div class="opt" onclick="pick(23,'B')"><span class="opt-letter">B</span><span class="opt-text">From home</span></div>
     <div class="opt" onclick="pick(23,'C')"><span class="opt-letter">C</span><span class="opt-text">Offices</span></div>
     <div class="opt" onclick="pick(23,'D')"><span class="opt-letter">D</span><span class="opt-text">Cafeterias</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 24</div><div class="q-text">What can students organize more easily?</div><div class="options" id="o24">
+  <div class="question-block"><div class="q-number">Question 24</div><div class="q-text">What can students organize more easily with online classes?</div><div class="options" id="o24">
     <div class="opt" onclick="pick(24,'A')"><span class="opt-letter">A</span><span class="opt-text">Transportation</span></div>
     <div class="opt" onclick="pick(24,'B')"><span class="opt-letter">B</span><span class="opt-text">Homework</span></div>
     <div class="opt" onclick="pick(24,'C')"><span class="opt-letter">C</span><span class="opt-text">Their schedules</span></div>
     <div class="opt" onclick="pick(24,'D')"><span class="opt-letter">D</span><span class="opt-text">Sports activities</span></div>
   </div></div>
 
-  <div class="question-block"><div class="q-number">Question 25</div><div class="q-text">What is one disadvantage of online classes?</div><div class="options" id="o25">
+  <div class="question-block"><div class="q-number">Question 25</div><div class="q-text">What is one disadvantage of online classes mentioned in the text?</div><div class="options" id="o25">
     <div class="opt" onclick="pick(25,'A')"><span class="opt-letter">A</span><span class="opt-text">Long commutes</span></div>
     <div class="opt" onclick="pick(25,'B')"><span class="opt-letter">B</span><span class="opt-text">Internet connection problems</span></div>
     <div class="opt" onclick="pick(25,'C')"><span class="opt-letter">C</span><span class="opt-text">Expensive transportation</span></div>
@@ -367,11 +343,10 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
   <div class="submit-zone">
     <div class="answered-count">Answered: <span id="answeredCount">0</span> / 25</div>
-    <button class="submit-btn" id="submitBtn" onclick="submitExam()">Submit Exam</button>
+    <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
   </div>
 </div>
 
-<!-- RESULTS -->
 <div id="resultsScreen">
   <div class="result-card">
     <h2>Exam Complete</h2>
@@ -391,8 +366,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 </div>
 
 <script>
-// ── USERS ──────────────────────────────────────────────
-const USERS = [
+const USERS=[
   {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'hernan1103'},
   {id:'1005661371',name:'Zulema Perez Guillin',pass:'zulema1005'},
   {id:'1103100577',name:'Nawal Micheel Luna',pass:'nawal1103'},
@@ -410,173 +384,96 @@ const USERS = [
   {id:'1143409541',name:'Abrahan Caro Ortega',pass:'abrahan1143'},
   {id:'1102576259',name:'Yeffith Zapata Lara',pass:'yeffith1102'}
 ];
+const KEY={1:'B',2:'C',3:'B',4:'C',5:'C',6:'C',7:'B',8:'D',9:'C',10:'B',11:'C',12:'B',13:'C',14:'D',15:'B',16:'C',17:'C',18:'B',19:'C',20:'B',21:'C',22:'C',23:'B',24:'C',25:'B'};
+let answers={},currentUser=null,timerInterval=null,timeLeft=55*60,playCounts={1:0,2:0};
 
-// ── ANSWER KEY ─────────────────────────────────────────
-const KEY = {1:'B',2:'C',3:'B',4:'C',5:'C',6:'C',7:'B',8:'D',9:'C',10:'B',
-             11:'C',12:'B',13:'C',14:'D',15:'B',16:'C',17:'C',18:'B',19:'C',
-             20:'B',21:'C',22:'C',23:'B',24:'C',25:'B'};
-
-let answers = {};
-let currentUser = null;
-let timerInterval = null;
-let timeLeft = 55 * 60;
-let playCounts = {1:0, 2:0};
-
-// ── ANTI COPY ──────────────────────────────────────────
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey||e.metaKey) && ['c','v','u','a','s'].includes(e.key.toLowerCase())) e.preventDefault();
-  if (e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase()))) e.preventDefault();
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&['c','v','u','a','s'].includes(e.key.toLowerCase()))e.preventDefault();
+  if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase())))e.preventDefault();
 });
 
-// ── LOGIN ──────────────────────────────────────────────
-function doLogin() {
-  const id = document.getElementById('loginId').value.trim();
-  const pass = document.getElementById('loginPass').value.trim();
-  const user = USERS.find(u => u.id === id && u.pass === pass);
-  if (!user) {
-    document.getElementById('loginError').style.display = 'block';
-    return;
-  }
-  // Check already submitted
-  const results = JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
-  if (results.find(r => r.id === user.id)) {
-    alert('Ya presentaste este examen. Contacta a tu docente.');
-    return;
-  }
-  currentUser = user;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('examScreen').style.display = 'block';
-  document.getElementById('studentNameDisplay').textContent = user.name + ' · ' + user.id;
-  loadAudios();
+function doLogin(){
+  const id=document.getElementById('loginId').value.trim();
+  const pass=document.getElementById('loginPass').value.trim();
+  const user=USERS.find(u=>u.id===id&&u.pass===pass);
+  if(!user){document.getElementById('loginError').style.display='block';return;}
+  const results=JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
+  if(results.find(r=>r.id===user.id)){alert('Ya presentaste este examen. Contacta a tu docente.');return;}
+  currentUser=user;
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('examScreen').style.display='block';
+  document.getElementById('studentNameDisplay').textContent=user.name+' · '+user.id;
   startTimer();
 }
 
-// ── TIMER ──────────────────────────────────────────────
-function startTimer() {
-  timerInterval = setInterval(() => {
+function startTimer(){
+  timerInterval=setInterval(()=>{
     timeLeft--;
-    const m = Math.floor(timeLeft/60).toString().padStart(2,'0');
-    const s = (timeLeft%60).toString().padStart(2,'0');
-    const el = document.getElementById('timerDisplay');
-    el.textContent = m+':'+s;
-    if (timeLeft <= 300) el.classList.add('warning');
-    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(true); }
-  }, 1000);
+    const m=Math.floor(timeLeft/60).toString().padStart(2,'0');
+    const s=(timeLeft%60).toString().padStart(2,'0');
+    const el=document.getElementById('timerDisplay');
+    el.textContent=m+':'+s;
+    if(timeLeft<=300)el.classList.add('warning');
+    if(timeLeft<=0){clearInterval(timerInterval);submitExam(true);}
+  },1000);
 }
 
-// ── AUDIO ──────────────────────────────────────────────
-function loadAudios() {
-  const a1 = localStorage.getItem('tweetalig_audio1');
-  const a2 = localStorage.getItem('tweetalig_audio2');
-  if (a1) document.getElementById('audioEl1').src = a1;
-  else document.getElementById('audio1NoFile').style.display = 'block';
-  if (a2) document.getElementById('audioEl2').src = a2;
-  else document.getElementById('audio2NoFile').style.display = 'block';
-}
-
-function playAudio(n) {
-  if (playCounts[n] >= 2) return;
-  const el = document.getElementById('audioEl'+n);
-  if (!el.src || el.src === window.location.href) { alert('Audio not available yet.'); return; }
-  // Stop the other
-  const other = n===1?2:1;
+function playAudio(n){
+  if(playCounts[n]>=2){alert('Maximum 2 plays reached for this audio.');return;}
+  const el=document.getElementById('audioEl'+n);
+  const other=n===1?2:1;
   document.getElementById('audioEl'+other).pause();
   document.getElementById('playBtn'+other).classList.remove('playing');
-  document.getElementById('playBtn'+other).innerHTML = '▶ Play Audio '+other;
-
-  el.play();
-  const btn = document.getElementById('playBtn'+n);
+  document.getElementById('playBtn'+other).innerHTML='▶ Play Audio '+other;
+  el.play().catch(()=>alert('Audio file not found. Make sure audio'+n+'.mp3 is in the same folder.'));
+  const btn=document.getElementById('playBtn'+n);
   btn.classList.add('playing');
-  btn.innerHTML = '⏸ Playing...';
+  btn.innerHTML='⏸ Playing...';
 }
 
-function audioEnded(n) {
+function audioEnded(n){
   playCounts[n]++;
-  const btn = document.getElementById('playBtn'+n);
+  const btn=document.getElementById('playBtn'+n);
   btn.classList.remove('playing');
-  const rem = 2 - playCounts[n];
-  if (rem <= 0) {
-    btn.disabled = true;
-    btn.innerHTML = '✓ Audio played (max 2x)';
-    document.getElementById('playInfo'+n).textContent = 'No plays remaining';
-  } else {
-    btn.innerHTML = '▶ Play Audio '+n;
-    document.getElementById('playInfo'+n).textContent = 'Plays remaining: '+rem;
-  }
+  const rem=2-playCounts[n];
+  if(rem<=0){btn.disabled=true;btn.innerHTML='✓ Audio played (max 2x)';}
+  else{btn.innerHTML='▶ Play Audio '+n;document.getElementById('playInfo'+n).textContent='Plays remaining: '+rem;}
 }
 
-// ── ANSWER SELECTION ───────────────────────────────────
-function pick(q, val) {
-  answers[q] = val;
-  const opts = document.querySelectorAll('#o'+q+' .opt');
-  const letters = ['A','B','C','D'];
-  opts.forEach((o,i) => {
-    o.classList.toggle('selected', letters[i]===val);
+function pick(q,val){
+  answers[q]=val;
+  document.querySelectorAll('#o'+q+' .opt').forEach((o,i)=>{
+    o.classList.toggle('selected',['A','B','C','D'][i]===val);
   });
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+  document.getElementById('answeredCount').textContent=Object.keys(answers).length;
 }
 
-// ── SUBMIT ─────────────────────────────────────────────
-function submitExam(auto=false) {
-  const answered = Object.keys(answers).length;
-  if (!auto && answered < 25) {
-    if (!confirm(`You have ${25-answered} unanswered questions. Submit anyway?`)) return;
-  }
+function submitExam(auto=false){
+  const answered=Object.keys(answers).length;
+  if(!auto&&answered<25){if(!confirm('You have '+(25-answered)+' unanswered questions. Submit anyway?'))return;}
   clearInterval(timerInterval);
-
-  let correct = 0;
-  let listeningCorrect = 0;
-  let readingCorrect = 0;
-  for (let q=1; q<=25; q++) {
-    if (answers[q] === KEY[q]) {
-      correct++;
-      if (q<=10) listeningCorrect++;
-      else readingCorrect++;
-    }
+  let correct=0,listeningCorrect=0,readingCorrect=0;
+  for(let q=1;q<=25;q++){
+    if(answers[q]===KEY[q]){correct++;if(q<=10)listeningCorrect++;else readingCorrect++;}
   }
-
-  // Scale to 0–5
-  const rawScore = (correct/25)*5;
-  const grade = Math.round(rawScore*10)/10;
-  const pct = Math.round((correct/25)*100);
-
-  // Save result
-  const results = JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
-  results.push({
-    id: currentUser.id,
-    name: currentUser.name,
-    grade: grade,
-    correct: correct,
-    listeningCorrect: listeningCorrect,
-    readingCorrect: readingCorrect,
-    answers: {...answers},
-    submittedAt: new Date().toISOString(),
-    timeUsed: Math.round((55*60 - timeLeft)/60)
-  });
-  localStorage.setItem('tweetalig_results', JSON.stringify(results));
-
-  // Show results
-  document.getElementById('examScreen').style.display = 'none';
-  document.getElementById('resultsScreen').style.display = 'block';
-  document.getElementById('resultName').textContent = currentUser.name;
-  document.getElementById('resultScore').textContent = grade.toFixed(1);
-  document.getElementById('scoreFill').style.width = pct+'%';
-  document.getElementById('detailCorrect').textContent = correct + ' / 25';
-  document.getElementById('detailListening').textContent = listeningCorrect + ' / 10';
-  document.getElementById('detailReading').textContent = readingCorrect + ' / 15';
-
-  const badge = document.getElementById('resultBadge');
-  const msg = document.getElementById('resultMsg');
-  if (grade >= 3.0) {
-    badge.textContent = '✓ Passed';
-    badge.className = 'result-badge badge-pass';
-    msg.textContent = 'Congratulations! You have passed the B1.1 final exam.';
-  } else {
-    badge.textContent = '✗ Not passed';
-    badge.className = 'result-badge badge-fail';
-    msg.textContent = 'You did not pass this time. Keep practicing and talk to your teacher.';
-  }
+  const grade=Math.round((correct/25)*5*10)/10;
+  const pct=Math.round((correct/25)*100);
+  const results=JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
+  results.push({id:currentUser.id,name:currentUser.name,grade,correct,listeningCorrect,readingCorrect,answers:{...answers},submittedAt:new Date().toISOString(),timeUsed:Math.round((55*60-timeLeft)/60)});
+  localStorage.setItem('tweetalig_results',JSON.stringify(results));
+  document.getElementById('examScreen').style.display='none';
+  document.getElementById('resultsScreen').style.display='block';
+  document.getElementById('resultName').textContent=currentUser.name;
+  document.getElementById('resultScore').textContent=grade.toFixed(1);
+  document.getElementById('scoreFill').style.width=pct+'%';
+  document.getElementById('detailCorrect').textContent=correct+' / 25';
+  document.getElementById('detailListening').textContent=listeningCorrect+' / 10';
+  document.getElementById('detailReading').textContent=readingCorrect+' / 15';
+  const badge=document.getElementById('resultBadge');
+  const msg=document.getElementById('resultMsg');
+  if(grade>=3.0){badge.textContent='✓ Passed';badge.className='result-badge badge-pass';msg.textContent='Congratulations! You have passed the B1.1 final exam.';}
+  else{badge.textContent='✗ Not passed';badge.className='result-badge badge-fail';msg.textContent='You did not pass this time. Keep practicing and talk to your teacher.';}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
