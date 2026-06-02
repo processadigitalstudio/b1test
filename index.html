@@ -22,6 +22,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .form-group input:focus{outline:none;border-color:#2d6a4f;background:#fff}
 .login-btn{width:100%;padding:13px;background:#2d6a4f;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background 0.2s;margin-top:0.5rem}
 .login-btn:hover{background:#235a41}
+.login-btn:disabled{background:#aaa;cursor:not-allowed}
 .login-error{display:none;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:12px}
 #examScreen{display:none;max-width:740px;margin:0 auto;padding:2rem 1.5rem 4rem}
 .exam-header{background:#fff;border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;border:1px solid #e8e4db;display:flex;align-items:center;justify-content:space-between}
@@ -34,7 +35,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .timer-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.5px}
 .student-badge{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 16px;font-size:13px;color:#166534;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
 .section-header{background:#2d6a4f;color:#fff;border-radius:12px;padding:12px 20px;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
-.section-header h2{font-size:15px;font-weight:600;letter-spacing:0.3px}
+.section-header h2{font-size:15px;font-weight:600}
 .section-pts{font-size:12px;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:20px}
 .section-instructions{font-size:13px;color:#666;margin-bottom:1.25rem;padding:0 4px;line-height:1.6}
 .audio-card{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
@@ -44,12 +45,11 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .play-btn{width:38px;height:38px;border-radius:50%;background:#2d6a4f;color:#fff;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
 .play-btn:hover{background:#235a41;transform:scale(1.05)}
 .play-btn:disabled{background:#d1d5db;cursor:not-allowed;transform:none}
-.audio-time{font-size:12px;color:#666;min-width:80px;font-variant-numeric:tabular-nums}
+.audio-time{font-size:12px;color:#666;min-width:90px;font-variant-numeric:tabular-nums}
 .play-info{font-size:12px;color:#2d6a4f;font-weight:600;margin-left:auto}
 .play-info.exhausted{color:#dc2626}
-.progress-wrap{position:relative;height:6px;background:#d1d5db;border-radius:3px;cursor:pointer;margin-bottom:2px}
-.progress-fill{height:100%;background:#2d6a4f;border-radius:3px;width:0%;transition:width 0.1s linear;pointer-events:none}
-.progress-wrap:hover .progress-fill{background:#235a41}
+.progress-wrap{position:relative;height:8px;background:#d1d5db;border-radius:4px;cursor:pointer}
+.progress-fill{height:100%;background:#2d6a4f;border-radius:4px;width:0%;pointer-events:none}
 .question-block{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.25rem 1.5rem;margin-bottom:12px}
 .q-number{font-size:11px;font-weight:700;color:#2d6a4f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
 .q-text{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:12px;line-height:1.5}
@@ -84,14 +84,12 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .badge-pass{background:#dcfce7;color:#166534}
 .badge-fail{background:#fee2e2;color:#991b1b}
 .divider{border:none;border-top:1px solid #e8e4db;margin:2rem 0}
+.saving-msg{font-size:12px;color:#888;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="brand">
-  <div>
-    <div class="brand-name">Tweetalig</div>
-    <div class="brand-sub">Centro de Idiomas</div>
-  </div>
+  <div><div class="brand-name">Tweetalig</div><div class="brand-sub">Centro de Idiomas</div></div>
 </div>
 
 <div id="loginScreen">
@@ -106,17 +104,14 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
       <label>Contraseña</label>
       <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="off" onpaste="return false" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <button class="login-btn" onclick="doLogin()">Entrar al examen</button>
-    <div class="login-error" id="loginError">Cédula o contraseña incorrecta. Verifica tus datos.</div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Entrar al examen</button>
+    <div class="login-error" id="loginError">Cédula o contraseña incorrecta.</div>
   </div>
 </div>
 
 <div id="examScreen">
   <div class="exam-header">
-    <div>
-      <h1>Examen Final – B1.1</h1>
-      <div class="exam-meta">55 minutos · 25 puntos</div>
-    </div>
+    <div><h1>Examen Final – B1.1</h1><div class="exam-meta">55 minutos · 25 puntos</div></div>
     <div class="timer-box">
       <div class="timer" id="timerDisplay">55:00</div>
       <div class="timer-label">Tiempo restante</div>
@@ -124,13 +119,9 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   </div>
   <div class="student-badge">👤 <span id="studentNameDisplay"></span></div>
 
-  <div class="section-header">
-    <h2>Section 1 – Listening</h2>
-    <span class="section-pts">10 points</span>
-  </div>
-  <p class="section-instructions">Listen carefully to each audio twice and choose the correct answer.</p>
+  <div class="section-header"><h2>Section 1 – Listening</h2><span class="section-pts">10 points</span></div>
+  <p class="section-instructions">Listen carefully to each audio and choose the correct answer. Maximum 3 plays per audio.</p>
 
-  <!-- AUDIO 1 -->
   <div class="audio-card">
     <div class="audio-title">🎧 Audio 1 – "A New Job"</div>
     <div class="audio-player-wrap">
@@ -139,49 +130,14 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
         <span class="audio-time" id="audioTime1">0:00 / 0:00</span>
         <span class="play-info" id="playInfo1">Plays remaining: 3</span>
       </div>
-      <div class="progress-wrap" id="progressWrap1" onclick="seekAudio(1, event)">
+      <div class="progress-wrap" id="progressWrap1" onclick="seekAudio(1,event)">
         <div class="progress-fill" id="progressFill1"></div>
       </div>
     </div>
     <audio id="audioEl1" src="audio1.mp3"></audio>
   </div>
+  <div id="listeningBlock1"></div>
 
-  <div class="question-block"><div class="q-number">Question 1</div><div class="q-text">When did Mark start his new job?</div><div class="options" id="o1">
-    <div class="opt" onclick="pick(1,'A')"><span class="opt-letter">A</span><span class="opt-text">Last week</span></div>
-    <div class="opt" onclick="pick(1,'B')"><span class="opt-letter">B</span><span class="opt-text">Last month</span></div>
-    <div class="opt" onclick="pick(1,'C')"><span class="opt-letter">C</span><span class="opt-text">Last year</span></div>
-    <div class="opt" onclick="pick(1,'D')"><span class="opt-letter">D</span><span class="opt-text">Yesterday</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 2</div><div class="q-text">What type of company does Mark work for?</div><div class="options" id="o2">
-    <div class="opt" onclick="pick(2,'A')"><span class="opt-letter">A</span><span class="opt-text">A hospital</span></div>
-    <div class="opt" onclick="pick(2,'B')"><span class="opt-letter">B</span><span class="opt-text">A school</span></div>
-    <div class="opt" onclick="pick(2,'C')"><span class="opt-letter">C</span><span class="opt-text">A technology company</span></div>
-    <div class="opt" onclick="pick(2,'D')"><span class="opt-letter">D</span><span class="opt-text">A bank</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 3</div><div class="q-text">What does Mark do at the company?</div><div class="options" id="o3">
-    <div class="opt" onclick="pick(3,'A')"><span class="opt-letter">A</span><span class="opt-text">Marketing</span></div>
-    <div class="opt" onclick="pick(3,'B')"><span class="opt-letter">B</span><span class="opt-text">Customer service</span></div>
-    <div class="opt" onclick="pick(3,'C')"><span class="opt-letter">C</span><span class="opt-text">Sales</span></div>
-    <div class="opt" onclick="pick(3,'D')"><span class="opt-letter">D</span><span class="opt-text">Teaching</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 4</div><div class="q-text">How many days a week does Mark work from home?</div><div class="options" id="o4">
-    <div class="opt" onclick="pick(4,'A')"><span class="opt-letter">A</span><span class="opt-text">One</span></div>
-    <div class="opt" onclick="pick(4,'B')"><span class="opt-letter">B</span><span class="opt-text">Two</span></div>
-    <div class="opt" onclick="pick(4,'C')"><span class="opt-letter">C</span><span class="opt-text">Three</span></div>
-    <div class="opt" onclick="pick(4,'D')"><span class="opt-letter">D</span><span class="opt-text">Five</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 5</div><div class="q-text">What is Mark's favourite part of the new job?</div><div class="options" id="o5">
-    <div class="opt" onclick="pick(5,'A')"><span class="opt-letter">A</span><span class="opt-text">The higher salary</span></div>
-    <div class="opt" onclick="pick(5,'B')"><span class="opt-letter">B</span><span class="opt-text">Travelling more</span></div>
-    <div class="opt" onclick="pick(5,'C')"><span class="opt-letter">C</span><span class="opt-text">More free time in the evenings</span></div>
-    <div class="opt" onclick="pick(5,'D')"><span class="opt-letter">D</span><span class="opt-text">A bigger office</span></div>
-  </div></div>
-
-  <!-- AUDIO 2 -->
   <div class="audio-card" style="margin-top:2rem">
     <div class="audio-title">🎧 Audio 2 – "Healthy Lifestyle"</div>
     <div class="audio-player-wrap">
@@ -190,172 +146,30 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
         <span class="audio-time" id="audioTime2">0:00 / 0:00</span>
         <span class="play-info" id="playInfo2">Plays remaining: 3</span>
       </div>
-      <div class="progress-wrap" id="progressWrap2" onclick="seekAudio(2, event)">
+      <div class="progress-wrap" id="progressWrap2" onclick="seekAudio(2,event)">
         <div class="progress-fill" id="progressFill2"></div>
       </div>
     </div>
     <audio id="audioEl2" src="audio2.mp3"></audio>
   </div>
-
-  <div class="question-block"><div class="q-number">Question 6</div><div class="q-text">How many hours of sleep do doctors recommend?</div><div class="options" id="o6">
-    <div class="opt" onclick="pick(6,'A')"><span class="opt-letter">A</span><span class="opt-text">Five</span></div>
-    <div class="opt" onclick="pick(6,'B')"><span class="opt-letter">B</span><span class="opt-text">Six</span></div>
-    <div class="opt" onclick="pick(6,'C')"><span class="opt-letter">C</span><span class="opt-text">Seven</span></div>
-    <div class="opt" onclick="pick(6,'D')"><span class="opt-letter">D</span><span class="opt-text">Ten</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 7</div><div class="q-text">What should people drink enough of during the day?</div><div class="options" id="o7">
-    <div class="opt" onclick="pick(7,'A')"><span class="opt-letter">A</span><span class="opt-text">Coffee</span></div>
-    <div class="opt" onclick="pick(7,'B')"><span class="opt-letter">B</span><span class="opt-text">Water</span></div>
-    <div class="opt" onclick="pick(7,'C')"><span class="opt-letter">C</span><span class="opt-text">Juice</span></div>
-    <div class="opt" onclick="pick(7,'D')"><span class="opt-letter">D</span><span class="opt-text">Soda</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 8</div><div class="q-text">Which activity is mentioned as good for your health?</div><div class="options" id="o8">
-    <div class="opt" onclick="pick(8,'A')"><span class="opt-letter">A</span><span class="opt-text">Swimming</span></div>
-    <div class="opt" onclick="pick(8,'B')"><span class="opt-letter">B</span><span class="opt-text">Running</span></div>
-    <div class="opt" onclick="pick(8,'C')"><span class="opt-letter">C</span><span class="opt-text">Dancing</span></div>
-    <div class="opt" onclick="pick(8,'D')"><span class="opt-letter">D</span><span class="opt-text">Cycling</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 9</div><div class="q-text">What should people reduce before sleeping?</div><div class="options" id="o9">
-    <div class="opt" onclick="pick(9,'A')"><span class="opt-letter">A</span><span class="opt-text">Television</span></div>
-    <div class="opt" onclick="pick(9,'B')"><span class="opt-letter">B</span><span class="opt-text">Exercise</span></div>
-    <div class="opt" onclick="pick(9,'C')"><span class="opt-letter">C</span><span class="opt-text">Screen time</span></div>
-    <div class="opt" onclick="pick(9,'D')"><span class="opt-letter">D</span><span class="opt-text">Noise</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 10</div><div class="q-text">What is the audio mainly about?</div><div class="options" id="o10">
-    <div class="opt" onclick="pick(10,'A')"><span class="opt-letter">A</span><span class="opt-text">Technology</span></div>
-    <div class="opt" onclick="pick(10,'B')"><span class="opt-letter">B</span><span class="opt-text">Healthy habits</span></div>
-    <div class="opt" onclick="pick(10,'C')"><span class="opt-letter">C</span><span class="opt-text">Sports competitions</span></div>
-    <div class="opt" onclick="pick(10,'D')"><span class="opt-letter">D</span><span class="opt-text">Transportation</span></div>
-  </div></div>
+  <div id="listeningBlock2"></div>
 
   <hr class="divider">
-
-  <div class="section-header">
-    <h2>Section 2 – Reading</h2>
-    <span class="section-pts">15 points</span>
-  </div>
+  <div class="section-header"><h2>Section 2 – Reading</h2><span class="section-pts">15 points</span></div>
   <p class="section-instructions">Read the texts carefully and choose the correct answer.</p>
 
   <div class="reading-passage">
     <div class="passage-title">Text 1 – "Weekend Plans"</div>
     <div class="passage-text">Sofia and her friends decided to spend the weekend at the beach. On Saturday morning, they traveled by bus for two hours. The weather was sunny and warm, so they spent most of the day swimming and playing volleyball.<br><br>At night, they had dinner at a small restaurant near the hotel. Sofia said the seafood was delicious.<br><br>On Sunday afternoon, they returned home feeling relaxed and happy.</div>
   </div>
-
-  <div class="question-block"><div class="q-number">Question 11</div><div class="q-text">Where did Sofia and her friends go?</div><div class="options" id="o11">
-    <div class="opt" onclick="pick(11,'A')"><span class="opt-letter">A</span><span class="opt-text">To the mountains</span></div>
-    <div class="opt" onclick="pick(11,'B')"><span class="opt-letter">B</span><span class="opt-text">To the countryside</span></div>
-    <div class="opt" onclick="pick(11,'C')"><span class="opt-letter">C</span><span class="opt-text">To the beach</span></div>
-    <div class="opt" onclick="pick(11,'D')"><span class="opt-letter">D</span><span class="opt-text">To another city</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 12</div><div class="q-text">How did they travel?</div><div class="options" id="o12">
-    <div class="opt" onclick="pick(12,'A')"><span class="opt-letter">A</span><span class="opt-text">By train</span></div>
-    <div class="opt" onclick="pick(12,'B')"><span class="opt-letter">B</span><span class="opt-text">By bus</span></div>
-    <div class="opt" onclick="pick(12,'C')"><span class="opt-letter">C</span><span class="opt-text">By car</span></div>
-    <div class="opt" onclick="pick(12,'D')"><span class="opt-letter">D</span><span class="opt-text">By plane</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 13</div><div class="q-text">What did they do during the day at the beach?</div><div class="options" id="o13">
-    <div class="opt" onclick="pick(13,'A')"><span class="opt-letter">A</span><span class="opt-text">Shopping</span></div>
-    <div class="opt" onclick="pick(13,'B')"><span class="opt-letter">B</span><span class="opt-text">Studying</span></div>
-    <div class="opt" onclick="pick(13,'C')"><span class="opt-letter">C</span><span class="opt-text">Swimming and volleyball</span></div>
-    <div class="opt" onclick="pick(13,'D')"><span class="opt-letter">D</span><span class="opt-text">Hiking</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 14</div><div class="q-text">What did Sofia think about the food?</div><div class="options" id="o14">
-    <div class="opt" onclick="pick(14,'A')"><span class="opt-letter">A</span><span class="opt-text">It was expensive</span></div>
-    <div class="opt" onclick="pick(14,'B')"><span class="opt-letter">B</span><span class="opt-text">It was terrible</span></div>
-    <div class="opt" onclick="pick(14,'C')"><span class="opt-letter">C</span><span class="opt-text">It was cold</span></div>
-    <div class="opt" onclick="pick(14,'D')"><span class="opt-letter">D</span><span class="opt-text">It was delicious</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 15</div><div class="q-text">How did they feel when they returned home?</div><div class="options" id="o15">
-    <div class="opt" onclick="pick(15,'A')"><span class="opt-letter">A</span><span class="opt-text">Tired</span></div>
-    <div class="opt" onclick="pick(15,'B')"><span class="opt-letter">B</span><span class="opt-text">Relaxed and happy</span></div>
-    <div class="opt" onclick="pick(15,'C')"><span class="opt-letter">C</span><span class="opt-text">Nervous</span></div>
-    <div class="opt" onclick="pick(15,'D')"><span class="opt-letter">D</span><span class="opt-text">Bored</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 16</div><div class="q-text">How was the weather at the beach?</div><div class="options" id="o16">
-    <div class="opt" onclick="pick(16,'A')"><span class="opt-letter">A</span><span class="opt-text">Rainy</span></div>
-    <div class="opt" onclick="pick(16,'B')"><span class="opt-letter">B</span><span class="opt-text">Cold</span></div>
-    <div class="opt" onclick="pick(16,'C')"><span class="opt-letter">C</span><span class="opt-text">Sunny and warm</span></div>
-    <div class="opt" onclick="pick(16,'D')"><span class="opt-letter">D</span><span class="opt-text">Windy</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 17</div><div class="q-text">Where did they eat dinner?</div><div class="options" id="o17">
-    <div class="opt" onclick="pick(17,'A')"><span class="opt-letter">A</span><span class="opt-text">At home</span></div>
-    <div class="opt" onclick="pick(17,'B')"><span class="opt-letter">B</span><span class="opt-text">In a hotel restaurant</span></div>
-    <div class="opt" onclick="pick(17,'C')"><span class="opt-letter">C</span><span class="opt-text">At a small restaurant</span></div>
-    <div class="opt" onclick="pick(17,'D')"><span class="opt-letter">D</span><span class="opt-text">In a supermarket</span></div>
-  </div></div>
+  <div id="readingBlock1"></div>
 
   <hr class="divider">
-
   <div class="reading-passage">
     <div class="passage-title">Text 2 – "Online Classes"</div>
     <div class="passage-text">Many students now take online classes because they are flexible and convenient. Students can study from home and organize their schedules more easily.<br><br>However, some students miss interacting with classmates and teachers face-to-face. Others sometimes have internet connection problems during class.<br><br>Even so, online education continues growing around the world.</div>
   </div>
-
-  <div class="question-block"><div class="q-number">Question 18</div><div class="q-text">Why do students like online classes?</div><div class="options" id="o18">
-    <div class="opt" onclick="pick(18,'A')"><span class="opt-letter">A</span><span class="opt-text">They are shorter</span></div>
-    <div class="opt" onclick="pick(18,'B')"><span class="opt-letter">B</span><span class="opt-text">They are flexible</span></div>
-    <div class="opt" onclick="pick(18,'C')"><span class="opt-letter">C</span><span class="opt-text">They are free</span></div>
-    <div class="opt" onclick="pick(18,'D')"><span class="opt-letter">D</span><span class="opt-text">They are easier</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 19</div><div class="q-text">What do some students miss about in-person classes?</div><div class="options" id="o19">
-    <div class="opt" onclick="pick(19,'A')"><span class="opt-letter">A</span><span class="opt-text">Homework</span></div>
-    <div class="opt" onclick="pick(19,'B')"><span class="opt-letter">B</span><span class="opt-text">Transportation</span></div>
-    <div class="opt" onclick="pick(19,'C')"><span class="opt-letter">C</span><span class="opt-text">Face-to-face interaction</span></div>
-    <div class="opt" onclick="pick(19,'D')"><span class="opt-letter">D</span><span class="opt-text">Exams</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 20</div><div class="q-text">What technical problem is mentioned in the text?</div><div class="options" id="o20">
-    <div class="opt" onclick="pick(20,'A')"><span class="opt-letter">A</span><span class="opt-text">Noise</span></div>
-    <div class="opt" onclick="pick(20,'B')"><span class="opt-letter">B</span><span class="opt-text">Internet connection problems</span></div>
-    <div class="opt" onclick="pick(20,'C')"><span class="opt-letter">C</span><span class="opt-text">Transportation</span></div>
-    <div class="opt" onclick="pick(20,'D')"><span class="opt-letter">D</span><span class="opt-text">Teachers</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 21</div><div class="q-text">What continues growing around the world?</div><div class="options" id="o21">
-    <div class="opt" onclick="pick(21,'A')"><span class="opt-letter">A</span><span class="opt-text">Television</span></div>
-    <div class="opt" onclick="pick(21,'B')"><span class="opt-letter">B</span><span class="opt-text">Sports</span></div>
-    <div class="opt" onclick="pick(21,'C')"><span class="opt-letter">C</span><span class="opt-text">Online education</span></div>
-    <div class="opt" onclick="pick(21,'D')"><span class="opt-letter">D</span><span class="opt-text">Tourism</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 22</div><div class="q-text">What is the text mainly about?</div><div class="options" id="o22">
-    <div class="opt" onclick="pick(22,'A')"><span class="opt-letter">A</span><span class="opt-text">University costs</span></div>
-    <div class="opt" onclick="pick(22,'B')"><span class="opt-letter">B</span><span class="opt-text">Technology companies</span></div>
-    <div class="opt" onclick="pick(22,'C')"><span class="opt-letter">C</span><span class="opt-text">Advantages and disadvantages of online classes</span></div>
-    <div class="opt" onclick="pick(22,'D')"><span class="opt-letter">D</span><span class="opt-text">Transportation systems</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 23</div><div class="q-text">Where can students study when taking online classes?</div><div class="options" id="o23">
-    <div class="opt" onclick="pick(23,'A')"><span class="opt-letter">A</span><span class="opt-text">Libraries only</span></div>
-    <div class="opt" onclick="pick(23,'B')"><span class="opt-letter">B</span><span class="opt-text">From home</span></div>
-    <div class="opt" onclick="pick(23,'C')"><span class="opt-letter">C</span><span class="opt-text">Offices</span></div>
-    <div class="opt" onclick="pick(23,'D')"><span class="opt-letter">D</span><span class="opt-text">Cafeterias</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 24</div><div class="q-text">What can students organize more easily with online classes?</div><div class="options" id="o24">
-    <div class="opt" onclick="pick(24,'A')"><span class="opt-letter">A</span><span class="opt-text">Transportation</span></div>
-    <div class="opt" onclick="pick(24,'B')"><span class="opt-letter">B</span><span class="opt-text">Homework</span></div>
-    <div class="opt" onclick="pick(24,'C')"><span class="opt-letter">C</span><span class="opt-text">Their schedules</span></div>
-    <div class="opt" onclick="pick(24,'D')"><span class="opt-letter">D</span><span class="opt-text">Sports activities</span></div>
-  </div></div>
-
-  <div class="question-block"><div class="q-number">Question 25</div><div class="q-text">What is one disadvantage of online classes mentioned in the text?</div><div class="options" id="o25">
-    <div class="opt" onclick="pick(25,'A')"><span class="opt-letter">A</span><span class="opt-text">Long commutes</span></div>
-    <div class="opt" onclick="pick(25,'B')"><span class="opt-letter">B</span><span class="opt-text">Internet connection problems</span></div>
-    <div class="opt" onclick="pick(25,'C')"><span class="opt-letter">C</span><span class="opt-text">Expensive transportation</span></div>
-    <div class="opt" onclick="pick(25,'D')"><span class="opt-letter">D</span><span class="opt-text">Lack of books</span></div>
-  </div></div>
+  <div id="readingBlock2"></div>
 
   <div class="submit-zone">
     <div class="answered-count">Answered: <span id="answeredCount">0</span> / 25</div>
@@ -381,27 +195,78 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCFORLDyxhFWSsINOujacYjCXC0mKXwjQs",
+  authDomain: "tweetalig-b1test.firebaseapp.com",
+  projectId: "tweetalig-b1test",
+  storageBucket: "tweetalig-b1test.firebasestorage.app",
+  messagingSenderId: "314442233744",
+  appId: "1:314442233744:web:2f1d5d6df1bd185002a515"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const USERS=[
-  {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'hernan1103'},
-  {id:'1005661371',name:'Zulema Perez Guillin',pass:'zulema1005'},
-  {id:'1103100577',name:'Nawal Micheel Luna',pass:'nawal1103'},
-  {id:'1005425859',name:'Diana Marcela Diaz Lezama',pass:'diana1005'},
-  {id:'1100543192',name:'Katia Luz Hernández Campo',pass:'katia1100'},
-  {id:'1103094427',name:'Jose Cuello Gale',pass:'jose1103'},
-  {id:'1102148336',name:'Jannin Paredes Olivera',pass:'jannin1102'},
-  {id:'1007183002',name:'Kellys María Lopez Junieles',pass:'kellys1007'},
-  {id:'1047372554',name:'Julian Andres Mallarino Vivero',pass:'julian1047'},
-  {id:'1052947945',name:'Malory Atencio',pass:'malory1052'},
-  {id:'1102801466',name:'Nataly Marcela Manotas Hernández',pass:'nataly1102'},
-  {id:'1103496968',name:'Jesus David Perez Guillin',pass:'jesus1103'},
-  {id:'1100543917',name:'Juan Jose Navarro Monterroza',pass:'juan1100'},
-  {id:'1101441082',name:'Juleimis Berrio',pass:'juleimis1101'},
-  {id:'1143409541',name:'Abrahan Caro Ortega',pass:'abrahan1143'},
-  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'yeffith1102'}
+  {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'Kx7#mP2q'},
+  {id:'1005661371',name:'Zulema Perez Guillin',pass:'Rn4$vL9w'},
+  {id:'1103100577',name:'Nawal Micheel Luna',pass:'Jt8@bQ3e'},
+  {id:'1005425859',name:'Diana Marcela Diaz Lezama',pass:'Wy5!cF6r'},
+  {id:'1100543192',name:'Katia Luz Hernández Campo',pass:'Pz2#hN8s'},
+  {id:'1103094427',name:'Jose Cuello Gale',pass:'Dm6$kT4u'},
+  {id:'1102148336',name:'Jannin Paredes Olivera',pass:'Xq9@gR7i'},
+  {id:'1007183002',name:'Kellys María Lopez Junieles',pass:'Lf3!jW5o'},
+  {id:'1047372554',name:'Julian Andres Mallarino Vivero',pass:'Vc8#nS2a'},
+  {id:'1052947945',name:'Malory Atencio',pass:'Ht4$pB6y'},
+  {id:'1102801466',name:'Nataly Marcela Manotas Hernández',pass:'Zk7@mD9z'},
+  {id:'1103496968',name:'Jesus David Perez Guillin',pass:'Qr5!wG3x'},
+  {id:'1100543917',name:'Juan Jose Navarro Monterroza',pass:'Nb2#vJ8c'},
+  {id:'1101441082',name:'Juleimis Berrio',pass:'Sf6$hK4v'},
+  {id:'1143409541',name:'Abrahan Caro Ortega',pass:'Ew9@tL7b'},
+  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'Mg3!qN5f'}
 ];
-const KEY={1:'B',2:'C',3:'B',4:'C',5:'C',6:'C',7:'B',8:'D',9:'C',10:'B',11:'C',12:'B',13:'C',14:'D',15:'B',16:'C',17:'C',18:'B',19:'C',20:'B',21:'C',22:'C',23:'B',24:'C',25:'B'};
-let answers={},currentUser=null,timerInterval=null,timeLeft=55*60,playCounts={1:0,2:0},playStarted={1:false,2:false};
+
+const LISTENING1_QS=[
+  {text:'When did Mark start his new job?',correct:'Last month',opts:['Last week','Last month','Last year','Yesterday']},
+  {text:'What type of company does Mark work for?',correct:'A technology company',opts:['A hospital','A school','A technology company','A bank']},
+  {text:'What does Mark do at the company?',correct:'Customer service',opts:['Marketing','Customer service','Sales','Teaching']},
+  {text:'How many days a week does Mark work from home?',correct:'Three',opts:['One','Two','Three','Five']},
+  {text:"What is Mark's favourite part of the new job?",correct:'More free time in the evenings',opts:['The higher salary','Travelling more','More free time in the evenings','A bigger office']}
+];
+const LISTENING2_QS=[
+  {text:'How many hours of sleep do doctors recommend?',correct:'Seven',opts:['Five','Six','Seven','Ten']},
+  {text:'What should people drink enough of during the day?',correct:'Water',opts:['Coffee','Water','Juice','Soda']},
+  {text:'Which activity is mentioned as good for your health?',correct:'Cycling',opts:['Swimming','Running','Dancing','Cycling']},
+  {text:'What should people reduce before sleeping?',correct:'Screen time',opts:['Television','Exercise','Screen time','Noise']},
+  {text:'What is the audio mainly about?',correct:'Healthy habits',opts:['Technology','Healthy habits','Sports competitions','Transportation']}
+];
+const READING1_QS=[
+  {text:'Where did Sofia and her friends go?',correct:'To the beach',opts:['To the mountains','To the countryside','To the beach','To another city']},
+  {text:'How did they travel?',correct:'By bus',opts:['By train','By bus','By car','By plane']},
+  {text:'What did they do during the day at the beach?',correct:'Swimming and volleyball',opts:['Shopping','Studying','Swimming and volleyball','Hiking']},
+  {text:'What did Sofia think about the food?',correct:'It was delicious',opts:['It was expensive','It was terrible','It was cold','It was delicious']},
+  {text:'How did they feel when they returned home?',correct:'Relaxed and happy',opts:['Tired','Relaxed and happy','Nervous','Bored']},
+  {text:'How was the weather at the beach?',correct:'Sunny and warm',opts:['Rainy','Cold','Sunny and warm','Windy']},
+  {text:'Where did they eat dinner?',correct:'At a small restaurant',opts:['At home','In a hotel restaurant','At a small restaurant','In a supermarket']}
+];
+const READING2_QS=[
+  {text:'Why do students like online classes?',correct:'They are flexible',opts:['They are shorter','They are flexible','They are free','They are easier']},
+  {text:'What do some students miss about in-person classes?',correct:'Face-to-face interaction',opts:['Homework','Transportation','Face-to-face interaction','Exams']},
+  {text:'What technical problem is mentioned in the text?',correct:'Internet connection problems',opts:['Noise','Internet connection problems','Transportation','Teachers']},
+  {text:'What continues growing around the world?',correct:'Online education',opts:['Television','Sports','Online education','Tourism']},
+  {text:'What is the text mainly about?',correct:'Advantages and disadvantages of online classes',opts:['University costs','Technology companies','Advantages and disadvantages of online classes','Transportation systems']},
+  {text:'Where can students study when taking online classes?',correct:'From home',opts:['Libraries only','From home','Offices','Cafeterias']},
+  {text:'What can students organize more easily with online classes?',correct:'Their schedules',opts:['Transportation','Homework','Their schedules','Sports activities']},
+  {text:'What does the text say about online education globally?',correct:'It continues growing around the world',opts:['It is decreasing in popularity','It is only available in rich countries','It continues growing around the world','It replaced traditional education completely']}
+];
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+let examOrder={},answers={},currentUser=null,timerInterval=null,timeLeft=55*60;
+let playCounts={1:0,2:0},playStarted={1:false,2:false};
 
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('keydown',e=>{
@@ -409,19 +274,79 @@ document.addEventListener('keydown',e=>{
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j'].includes(e.key.toLowerCase())))e.preventDefault();
 });
 
-function doLogin(){
+window.doLogin = async function(){
   const id=document.getElementById('loginId').value.trim();
   const pass=document.getElementById('loginPass').value.trim();
   const user=USERS.find(u=>u.id===id&&u.pass===pass);
-  if(!user){document.getElementById('loginError').style.display='block';return;}
-  const results=JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
-  if(results.find(r=>r.id===user.id)){alert('Ya presentaste este examen. Contacta a tu docente.');return;}
-  currentUser=user;
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('examScreen').style.display='block';
-  document.getElementById('studentNameDisplay').textContent=user.name+' · '+user.id;
-  startTimer();
+  const errEl=document.getElementById('loginError');
+  const btn=document.getElementById('loginBtn');
+  if(!user){errEl.textContent='Cédula o contraseña incorrecta.';errEl.style.display='block';return;}
+  btn.disabled=true;btn.textContent='Verificando...';
+  try{
+    const snap=await getDoc(doc(db,'results',id));
+    if(snap.exists()&&snap.data().status==='submitted'){
+      errEl.textContent='Ya presentaste este examen. No puedes volver a realizarlo.';
+      errEl.style.display='block';btn.disabled=false;btn.textContent='Entrar al examen';return;
+    }
+    currentUser=user;
+    // Save session as in-progress
+    await setDoc(doc(db,'results',id),{
+      id:user.id,name:user.name,status:'in-progress',
+      startedAt:serverTimestamp()
+    },{merge:true});
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('examScreen').style.display='block';
+    document.getElementById('studentNameDisplay').textContent=user.name+' · '+user.id;
+    buildExam();
+    initAudioListeners(1);initAudioListeners(2);
+    startTimer();
+  }catch(e){
+    errEl.textContent='Error de conexión. Intenta de nuevo.';
+    errEl.style.display='block';btn.disabled=false;btn.textContent='Entrar al examen';
+  }
+};
+
+function buildExam(){
+  const l1=shuffle(LISTENING1_QS);
+  const l2=shuffle(LISTENING2_QS);
+  const r1=shuffle(READING1_QS);
+  const r2=shuffle(READING2_QS);
+  let qNum=1;
+  function renderBlock(questions,containerId){
+    const container=document.getElementById(containerId);
+    container.innerHTML='';
+    questions.forEach(q=>{
+      const shuffledOpts=shuffle(q.opts);
+      examOrder[qNum]={question:q,shuffledOpts};
+      const block=document.createElement('div');
+      block.className='question-block';
+      block.innerHTML=`<div class="q-number">Question ${qNum}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options" id="opts_${qNum}">
+          ${shuffledOpts.map((opt,i)=>`
+            <div class="opt" onclick="window.pick(${qNum},${JSON.stringify(opt)})">
+              <span class="opt-letter">${['A','B','C','D'][i]}</span>
+              <span class="opt-text">${opt}</span>
+            </div>`).join('')}
+        </div>`;
+      container.appendChild(block);
+      qNum++;
+    });
+  }
+  renderBlock(l1,'listeningBlock1');
+  renderBlock(l2,'listeningBlock2');
+  renderBlock(r1,'readingBlock1');
+  renderBlock(r2,'readingBlock2');
 }
+
+window.pick=function(qNum,val){
+  answers[qNum]=val;
+  const{shuffledOpts}=examOrder[qNum];
+  document.querySelectorAll('#opts_'+qNum+' .opt').forEach((o,i)=>{
+    o.classList.toggle('selected',shuffledOpts[i]===val);
+  });
+  document.getElementById('answeredCount').textContent=Object.keys(answers).length;
+};
 
 function startTimer(){
   timerInterval=setInterval(()=>{
@@ -431,11 +356,11 @@ function startTimer(){
     const el=document.getElementById('timerDisplay');
     el.textContent=m+':'+s;
     if(timeLeft<=300)el.classList.add('warning');
-    if(timeLeft<=0){clearInterval(timerInterval);submitExam(true);}
+    if(timeLeft<=0){clearInterval(timerInterval);window.submitExam(true);}
   },1000);
 }
 
-function fmt(s){const m=Math.floor(s/60);return m+':'+(Math.floor(s%60)).toString().padStart(2,'0');}
+function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)).toString().padStart(2,'0');}
 
 function initAudioListeners(n){
   const el=document.getElementById('audioEl'+n);
@@ -444,23 +369,25 @@ function initAudioListeners(n){
     document.getElementById('progressFill'+n).style.width=pct+'%';
     document.getElementById('audioTime'+n).textContent=fmt(el.currentTime)+' / '+fmt(el.duration||0);
   });
-  el.addEventListener('ended',()=>audioEnded(n));
+  el.addEventListener('ended',()=>{
+    document.getElementById('playBtn'+n).innerHTML='▶';
+    if(playCounts[n]>=3)document.getElementById('playBtn'+n).disabled=true;
+  });
   el.addEventListener('loadedmetadata',()=>{
     document.getElementById('audioTime'+n).textContent='0:00 / '+fmt(el.duration);
   });
 }
 
-function togglePlay(n){
+window.togglePlay=function(n){
   if(playCounts[n]>=3){alert('Maximum 3 plays reached for this audio.');return;}
   const el=document.getElementById('audioEl'+n);
   const other=n===1?2:1;
   const otherEl=document.getElementById('audioEl'+other);
   if(!otherEl.paused){otherEl.pause();document.getElementById('playBtn'+other).innerHTML='▶';}
   if(el.paused){
-    if(!playStarted[n]||el.currentTime===0||el.currentTime>=el.duration-0.1){
-      if(el.currentTime>=el.duration-0.1){el.currentTime=0;}
-      playCounts[n]++;
-      playStarted[n]=true;
+    if(!playStarted[n]||el.currentTime>=el.duration-0.1){
+      if(el.currentTime>=el.duration-0.1)el.currentTime=0;
+      playCounts[n]++;playStarted[n]=true;
       const rem=3-playCounts[n];
       const info=document.getElementById('playInfo'+n);
       info.textContent=rem>0?'Plays remaining: '+rem:'No plays remaining';
@@ -468,52 +395,49 @@ function togglePlay(n){
     }
     el.play().catch(()=>alert('Audio not found. Make sure audio'+n+'.mp3 is uploaded to GitHub.'));
     document.getElementById('playBtn'+n).innerHTML='⏸';
-  } else {
-    el.pause();
-    document.getElementById('playBtn'+n).innerHTML='▶';
+  }else{
+    el.pause();document.getElementById('playBtn'+n).innerHTML='▶';
   }
-}
+};
 
-function audioEnded(n){
-  document.getElementById('playBtn'+n).innerHTML='▶';
-  if(playCounts[n]>=3){
-    const btn=document.getElementById('playBtn'+n);
-    btn.disabled=true;
-  }
-}
-
-function seekAudio(n,e){
+window.seekAudio=function(n,e){
   const el=document.getElementById('audioEl'+n);
   if(!el.duration)return;
   const wrap=document.getElementById('progressWrap'+n);
   const rect=wrap.getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  el.currentTime=pct*el.duration;
-}
+  el.currentTime=((e.clientX-rect.left)/rect.width)*el.duration;
+};
 
-window.addEventListener('load',()=>{initAudioListeners(1);initAudioListeners(2);});
-
-function pick(q,val){
-  answers[q]=val;
-  document.querySelectorAll('#o'+q+' .opt').forEach((o,i)=>{
-    o.classList.toggle('selected',['A','B','C','D'][i]===val);
-  });
-  document.getElementById('answeredCount').textContent=Object.keys(answers).length;
-}
-
-function submitExam(auto=false){
+window.submitExam=async function(auto=false){
   const answered=Object.keys(answers).length;
   if(!auto&&answered<25){if(!confirm('You have '+(25-answered)+' unanswered questions. Submit anyway?'))return;}
   clearInterval(timerInterval);
+  document.querySelector('.submit-btn').disabled=true;
+  document.querySelector('.submit-btn').textContent='Saving...';
+
   let correct=0,listeningCorrect=0,readingCorrect=0;
+  const answerLog=[];
   for(let q=1;q<=25;q++){
-    if(answers[q]===KEY[q]){correct++;if(q<=10)listeningCorrect++;else readingCorrect++;}
+    const{question}=examOrder[q];
+    const given=answers[q]||null;
+    const isCorrect=given===question.correct;
+    if(isCorrect){correct++;if(q<=10)listeningCorrect++;else readingCorrect++;}
+    answerLog.push({q,text:question.text,given,correct:question.correct,isCorrect});
   }
   const grade=Math.round((correct/25)*5*10)/10;
   const pct=Math.round((correct/25)*100);
-  const results=JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
-  results.push({id:currentUser.id,name:currentUser.name,grade,correct,listeningCorrect,readingCorrect,answers:{...answers},submittedAt:new Date().toISOString(),timeUsed:Math.round((55*60-timeLeft)/60)});
-  localStorage.setItem('tweetalig_results',JSON.stringify(results));
+  const timeUsed=Math.round((55*60-timeLeft)/60);
+
+  try{
+    await setDoc(doc(db,'results',currentUser.id),{
+      id:currentUser.id,name:currentUser.name,
+      grade,correct,listeningCorrect,readingCorrect,
+      answerLog,timeUsed,
+      status:'submitted',
+      submittedAt:serverTimestamp()
+    },{merge:true});
+  }catch(e){console.error('Save error',e);}
+
   document.getElementById('examScreen').style.display='none';
   document.getElementById('resultsScreen').style.display='block';
   document.getElementById('resultName').textContent=currentUser.name;
@@ -527,7 +451,7 @@ function submitExam(auto=false){
   if(grade>=3.0){badge.textContent='✓ Passed';badge.className='result-badge badge-pass';msg.textContent='Congratulations! You have passed the B1.1 final exam.';}
   else{badge.textContent='✗ Not passed';badge.className='result-badge badge-fail';msg.textContent='You did not pass this time. Keep practicing and talk to your teacher.';}
   window.scrollTo({top:0,behavior:'smooth'});
-}
+};
 </script>
 </body>
 </html>
