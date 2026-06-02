@@ -113,7 +113,7 @@ tr:hover td{background:#fafaf8}
     <div class="tabs">
       <button class="tab active" onclick="switchTab('monitor')">📡 Monitor en vivo</button>
       <button class="tab" onclick="switchTab('results')">📋 Resultados</button>
-      <button class="tab" onclick="switchTab('passwords')">🔑 Contraseñas</button>
+      <button class="tab admin-only" onclick="switchTab('passwords')">🔑 Contraseñas</button>
     </div>
 
     <div id="tab-monitor" class="tab-content active">
@@ -133,8 +133,8 @@ tr:hover td{background:#fafaf8}
         <div class="table-toolbar">
           <input type="text" class="search-input" id="searchInput" placeholder="Buscar nombre o cédula..." oninput="renderResults()">
           <div style="display:flex;gap:8px">
-            <button class="btn btn-green" onclick="exportCSV()">⬇ Exportar CSV</button>
-            <button class="btn btn-red" onclick="resetResult()">🗑 Borrar resultado</button>
+            <button class="btn btn-green admin-only" onclick="exportCSV()">⬇ Exportar CSV</button>
+            <button class="btn btn-red admin-only" onclick="resetResult()">🗑 Borrar resultado</button>
           </div>
         </div>
         <div class="table-wrap">
@@ -184,6 +184,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const ADMIN_USER='admin', ADMIN_PASS='tweetalig2026';
+const TEACHER_USER='dalvarez', TEACHER_PASS='dalvarez123++';
+let currentRole=''; // 'admin' or 'teacher'
+
 const USERS=[
   {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'Kx7#mP2q'},
   {id:'1005661371',name:'Zulema Perez Guillin',pass:'Rn4$vL9w'},
@@ -200,20 +203,37 @@ const USERS=[
   {id:'1100543917',name:'Juan Jose Navarro Monterroza',pass:'Nb2#vJ8c'},
   {id:'1101441082',name:'Juleimis Berrio',pass:'Sf6$hK4v'},
   {id:'1143409541',name:'Abrahan Caro Ortega',pass:'Ew9@tL7b'},
-  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'Mg3!qN5f'}
+  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'Mg3!qN5f'},
+  {id:'1005575869',name:'Joselin Michel Romero Lima',pass:'Bp4!xH7m'},
+  {id:'1005581611',name:'Rafael Ricardo Perez Silva',pass:'Tn8#wQ2k'},
+  {id:'1005425925',name:'Daniel Armando Angulo Atencia',pass:'Vf6$jL9r'},
+  {id:'1100623439',name:'Luisa Fernanda Ortega Novoa',pass:'Cx3@nM5p'},
+  {id:'1102877332',name:'Yoseb Alberto Santos Perez',pass:'Rh7!bK4s'},
+  {id:'64589579',name:'Patricia Velez Herrera',pass:'Gs2#tF8w'},
+  {id:'1103098344',name:'Ela Sofia Meneses Vergara',pass:'Dq9$vN3e'}
 ];
 
 let allData=[];
 let refreshInterval=null;
 
 window.adminLogin=function(){
-  if(document.getElementById('adminUser').value.trim()===ADMIN_USER&&
-     document.getElementById('adminPass').value.trim()===ADMIN_PASS){
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('adminScreen').style.display='block';
-    loadData();
-    refreshInterval=setInterval(loadData,15000);
-  }else{document.getElementById('adminError').style.display='block';}
+  const u=document.getElementById('adminUser').value.trim();
+  const p=document.getElementById('adminPass').value.trim();
+  if(u===ADMIN_USER&&p===ADMIN_PASS){
+    currentRole='admin';
+  }else if(u===TEACHER_USER&&p===TEACHER_PASS){
+    currentRole='teacher';
+  }else{
+    document.getElementById('adminError').style.display='block';return;
+  }
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminScreen').style.display='block';
+  // Hide restricted tabs and buttons for teacher
+  if(currentRole==='teacher'){
+    document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
+  }
+  loadData();
+  refreshInterval=setInterval(loadData,15000);
 };
 
 window.adminLogout=function(){
