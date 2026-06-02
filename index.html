@@ -320,12 +320,13 @@ function buildExam(){
       examOrder[qNum]={question:q,shuffledOpts};
       const block=document.createElement('div');
       block.className='question-block';
+      const letters=['A','B','C','D'];
       block.innerHTML=`<div class="q-number">Question ${qNum}</div>
         <div class="q-text">${q.text}</div>
         <div class="options" id="opts_${qNum}">
           ${shuffledOpts.map((opt,i)=>`
-            <div class="opt" onclick="window.pick(${qNum},${JSON.stringify(opt)})">
-              <span class="opt-letter">${['A','B','C','D'][i]}</span>
+            <div class="opt" onclick="window.pick(${qNum},${i})">
+              <span class="opt-letter">${letters[i]}</span>
               <span class="opt-text">${opt}</span>
             </div>`).join('')}
         </div>`;
@@ -339,11 +340,12 @@ function buildExam(){
   renderBlock(r2,'readingBlock2');
 }
 
-window.pick=function(qNum,val){
-  answers[qNum]=val;
+window.pick=function(qNum,optIndex){
   const{shuffledOpts}=examOrder[qNum];
+  const val=shuffledOpts[optIndex];
+  answers[qNum]=val;
   document.querySelectorAll('#opts_'+qNum+' .opt').forEach((o,i)=>{
-    o.classList.toggle('selected',shuffledOpts[i]===val);
+    o.classList.toggle('selected',i===optIndex);
   });
   document.getElementById('answeredCount').textContent=Object.keys(answers).length;
 };
