@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Examen B1.1 | Tweetalig</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-height:100vh}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-card{background:#fff;border-radius:16px;padding:2.5rem;width:100%;max-width:380px;border:1px solid #e8e4db}
+.login-card h2{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px}
+.login-card p{font-size:13px;color:#888;margin-bottom:2rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.3px}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid #e8e4db;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;background:#fafaf8;color:#1a1a1a}
+.form-group input:focus{outline:none;border-color:#2d6a4f}
+.login-btn{width:100%;padding:13px;background:#1a1a1a;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+.login-btn:hover{background:#333}
+.login-error{display:none;color:#dc2626;font-size:13px;margin-top:10px;text-align:center}
+
+/* LAYOUT */
+#adminScreen{display:none}
+.topbar{background:#1a1a1a;color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left{display:flex;align-items:center;gap:16px}
+.topbar h1{font-family:'DM Serif Display',serif;font-size:20px}
+.topbar-badge{background:#2d6a4f;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.logout-btn{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.logout-btn:hover{background:rgba(255,255,255,0.1)}
+
+.content{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:2rem}
+.stat-card{background:#fff;border-radius:14px;border:1px solid #e8e4db;padding:1.25rem 1.5rem}
+.stat-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.stat-value{font-size:28px;font-weight:700;color:#1a1a1a}
+.stat-value.green{color:#2d6a4f}
+.stat-value.red{color:#dc2626}
+.stat-value.orange{color:#d97706}
+
+/* AUDIO UPLOAD */
+.section-card{background:#fff;border-radius:16px;border:1px solid #e8e4db;padding:1.5rem;margin-bottom:1.5rem}
+.section-card h3{font-size:15px;font-weight:600;margin-bottom:1rem;padding-bottom:10px;border-bottom:1px solid #e8e4db}
+.audio-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.audio-upload-item{border:1.5px dashed #e8e4db;border-radius:12px;padding:1.25rem;text-align:center;transition:border-color 0.2s}
+.audio-upload-item.uploaded{border-color:#2d6a4f;background:#f0fdf4}
+.audio-upload-item label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:#1a1a1a}
+.audio-upload-item .sub{font-size:12px;color:#888;margin-bottom:12px}
+.upload-btn{display:inline-block;padding:8px 18px;background:#1a1a1a;color:#fff;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s}
+.upload-btn:hover{background:#333}
+.upload-btn input{display:none}
+.audio-status{font-size:12px;margin-top:8px;color:#2d6a4f;font-weight:600}
+.audio-preview{margin-top:10px}
+.audio-preview audio{width:100%;height:32px}
+.delete-audio-btn{background:none;border:none;color:#dc2626;font-size:12px;cursor:pointer;margin-top:6px;text-decoration:underline}
+
+/* RESULTS TABLE */
+.table-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.search-input{padding:9px 14px;border:1.5px solid #e8e4db;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fafaf8;color:#1a1a1a;width:240px}
+.search-input:focus{outline:none;border-color:#2d6a4f}
+.export-btn{padding:9px 18px;background:#2d6a4f;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+.export-btn:hover{background:#235a41}
+.reset-btn{padding:9px 18px;background:#fff;color:#dc2626;border:1.5px solid #fecaca;border-radius:10px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+.reset-btn:hover{background:#fef2f2}
+
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid #e8e4db}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:#f5f3ee}
+th{padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:0.4px;border-bottom:1px solid #e8e4db}
+td{padding:11px 14px;border-bottom:1px solid #f0ede6;color:#1a1a1a;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+.grade-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-weight:700;font-size:13px}
+.grade-pass{background:#dcfce7;color:#166534}
+.grade-fail{background:#fee2e2;color:#991b1b}
+.grade-mid{background:#fef9c3;color:#854d0e}
+.no-results{text-align:center;padding:3rem;color:#aaa;font-size:14px}
+
+/* PENDING */
+.pending-list{display:flex;flex-direction:column;gap:8px}
+.pending-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#fafaf8;border-radius:10px;border:1px solid #e8e4db}
+.pending-name{font-size:13px;color:#1a1a1a}
+.pending-id{font-size:12px;color:#888}
+.not-submitted-badge{font-size:11px;background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-weight:600}
+
+/* DETAIL MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:2rem;width:100%;max-width:680px;max-height:90vh;overflow-y:auto}
+.modal h3{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:1.5rem}
+.modal-close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:#888;margin-top:-4px}
+.answer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.5rem}
+.answer-item{border-radius:10px;padding:10px 8px;text-align:center;border:1px solid #e8e4db}
+.answer-item .qn{font-size:10px;color:#888;margin-bottom:4px}
+.answer-item .given{font-size:16px;font-weight:700}
+.answer-item .correct-ans{font-size:10px;color:#888;margin-top:2px}
+.answer-item.right{background:#f0fdf4;border-color:#bbf7d0}
+.answer-item.right .given{color:#166534}
+.answer-item.wrong{background:#fef2f2;border-color:#fecaca}
+.answer-item.wrong .given{color:#991b1b}
+.answer-item.empty{background:#f5f3ee}
+.answer-item.empty .given{color:#aaa}
+</style>
+</head>
+<body>
+
+<!-- ADMIN LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <h2>Panel Administrativo</h2>
+    <p>Examen Final B1.1 – Tweetalig</p>
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" id="adminUser" placeholder="admin" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <button class="login-btn" onclick="adminLogin()">Entrar</button>
+    <div class="login-error" id="adminError">Credenciales incorrectas</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminScreen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Tweetalig Admin</h1>
+      <span class="topbar-badge">Examen B1.1</span>
+    </div>
+    <button class="logout-btn" onclick="adminLogout()">Cerrar sesión</button>
+  </div>
+
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- AUDIO UPLOAD -->
+    <div class="section-card">
+      <h3>🎧 Audios del examen</h3>
+      <div class="audio-upload-grid">
+        <div class="audio-upload-item" id="audioBox1">
+          <label>Audio 1 – "A New Job"</label>
+          <div class="sub">Sube el archivo de audio (.mp3, .wav, .ogg)</div>
+          <label class="upload-btn">
+            Subir audio 1
+            <input type="file" accept="audio/*" onchange="uploadAudio(1, this)">
+          </label>
+          <div class="audio-status" id="audioStatus1"></div>
+          <div class="audio-preview" id="audioPreview1"></div>
+        </div>
+        <div class="audio-upload-item" id="audioBox2">
+          <label>Audio 2 – "Healthy Lifestyle"</label>
+          <div class="sub">Sube el archivo de audio (.mp3, .wav, .ogg)</div>
+          <label class="upload-btn">
+            Subir audio 2
+            <input type="file" accept="audio/*" onchange="uploadAudio(2, this)">
+          </label>
+          <div class="audio-status" id="audioStatus2"></div>
+          <div class="audio-preview" id="audioPreview2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS TABLE -->
+    <div class="section-card">
+      <h3>📋 Resultados de estudiantes</h3>
+      <div class="table-toolbar">
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o cédula..." oninput="renderTable()">
+        <div style="display:flex;gap:8px">
+          <button class="export-btn" onclick="exportCSV()">⬇ Exportar CSV</button>
+          <button class="reset-btn" onclick="resetResult()">🗑 Borrar resultado</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Estudiante</th>
+            <th>Cédula</th>
+            <th>Nota (0–5)</th>
+            <th>Correctas</th>
+            <th>Listening</th>
+            <th>Reading</th>
+            <th>Tiempo</th>
+            <th>Fecha</th>
+            <th>Detalle</th>
+          </tr></thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PENDING -->
+    <div class="section-card">
+      <h3>⏳ Pendientes de presentar</h3>
+      <div class="pending-list" id="pendingList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modalTitle"></h3>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'tweetalig2026';
+
+const USERS = [
+  {id:'1103499194',name:'Hernan Enrique Román Naizzir'},
+  {id:'1005661371',name:'Zulema Perez Guillin'},
+  {id:'1103100577',name:'Nawal Micheel Luna'},
+  {id:'1005425859',name:'Diana Marcela Diaz Lezama'},
+  {id:'1100543192',name:'Katia Luz Hernández Campo'},
+  {id:'1103094427',name:'Jose Cuello Gale'},
+  {id:'1102148336',name:'Jannin Paredes Olivera'},
+  {id:'1007183002',name:'Kellys María Lopez Junieles'},
+  {id:'1047372554',name:'Julian Andres Mallarino Vivero'},
+  {id:'1052947945',name:'Malory Atencio'},
+  {id:'1102801466',name:'Nataly Marcela Manotas Hernández'},
+  {id:'1103496968',name:'Jesus David Perez Guillin'},
+  {id:'1100543917',name:'Juan Jose Navarro Monterroza'},
+  {id:'1101441082',name:'Juleimis Berrio'},
+  {id:'1143409541',name:'Abrahan Caro Ortega'},
+  {id:'1102576259',name:'Yeffith Zapata Lara'}
+];
+
+const KEY = {1:'B',2:'C',3:'B',4:'C',5:'C',6:'C',7:'B',8:'D',9:'C',10:'B',
+             11:'C',12:'B',13:'C',14:'D',15:'B',16:'C',17:'C',18:'B',19:'C',
+             20:'B',21:'C',22:'C',23:'B',24:'C',25:'B'};
+
+function adminLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value.trim();
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminScreen').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('adminError').style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  document.getElementById('adminScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
+}
+
+function getResults() {
+  return JSON.parse(localStorage.getItem('tweetalig_results')||'[]');
+}
+
+function initAdmin() {
+  renderStats();
+  renderTable();
+  renderPending();
+  loadAudioPreviews();
+}
+
+function renderStats() {
+  const results = getResults();
+  const total = USERS.length;
+  const submitted = results.length;
+  const passed = results.filter(r => r.grade >= 3.0).length;
+  const avg = submitted ? (results.reduce((s,r)=>s+r.grade,0)/submitted).toFixed(1) : '-';
+  const highest = submitted ? Math.max(...results.map(r=>r.grade)).toFixed(1) : '-';
+  const lowest = submitted ? Math.min(...results.map(r=>r.grade)).toFixed(1) : '-';
+
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Total estudiantes</div><div class="stat-value">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Presentaron</div><div class="stat-value green">${submitted}</div></div>
+    <div class="stat-card"><div class="stat-label">Pendientes</div><div class="stat-value orange">${total-submitted}</div></div>
+    <div class="stat-card"><div class="stat-label">Aprobaron</div><div class="stat-value green">${passed}</div></div>
+    <div class="stat-card"><div class="stat-label">Reprobaron</div><div class="stat-value red">${submitted-passed}</div></div>
+    <div class="stat-card"><div class="stat-label">Promedio</div><div class="stat-value">${avg}</div></div>
+    <div class="stat-card"><div class="stat-label">Nota más alta</div><div class="stat-value green">${highest}</div></div>
+    <div class="stat-card"><div class="stat-label">Nota más baja</div><div class="stat-value red">${lowest}</div></div>
+  `;
+}
+
+function renderTable() {
+  const results = getResults();
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = results.filter(r => r.name.toLowerCase().includes(q) || r.id.includes(q));
+  const tbody = document.getElementById('resultsBody');
+
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="9" class="no-results">No hay resultados todavía</td></tr>`;
+    return;
+  }
+
+  filtered.sort((a,b) => b.grade - a.grade);
+  tbody.innerHTML = filtered.map(r => {
+    const gc = r.grade >= 3.0 ? 'grade-pass' : r.grade >= 2.0 ? 'grade-mid' : 'grade-fail';
+    const date = new Date(r.submittedAt).toLocaleDateString('es-CO',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    return `<tr>
+      <td>${r.name}</td>
+      <td style="font-family:monospace;font-size:12px">${r.id}</td>
+      <td><span class="grade-badge ${gc}">${r.grade.toFixed(1)}</span></td>
+      <td>${r.correct} / 25</td>
+      <td>${r.listeningCorrect} / 10</td>
+      <td>${r.readingCorrect} / 15</td>
+      <td>${r.timeUsed} min</td>
+      <td style="font-size:12px;color:#888">${date}</td>
+      <td><button onclick="showDetail('${r.id}')" style="background:none;border:1px solid #e8e4db;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:#2d6a4f;font-weight:600">Ver →</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPending() {
+  const results = getResults();
+  const submittedIds = results.map(r => r.id);
+  const pending = USERS.filter(u => !submittedIds.includes(u.id));
+  const el = document.getElementById('pendingList');
+  if (!pending.length) {
+    el.innerHTML = '<div style="font-size:13px;color:#2d6a4f;padding:12px">✅ Todos los estudiantes han presentado el examen.</div>';
+    return;
+  }
+  el.innerHTML = pending.map(u => `
+    <div class="pending-item">
+      <div><div class="pending-name">${u.name}</div><div class="pending-id">${u.id}</div></div>
+      <span class="not-submitted-badge">Sin presentar</span>
+    </div>
+  `).join('');
+}
+
+function showDetail(id) {
+  const results = getResults();
+  const r = results.find(x => x.id === id);
+  if (!r) return;
+
+  let html = `<div style="margin-bottom:1rem"><span style="font-size:13px;color:#888">Cédula: ${r.id}</span></div>`;
+  html += `<div class="answer-grid">`;
+  for (let q=1; q<=25; q++) {
+    const given = r.answers[q] || '–';
+    const isRight = given === KEY[q];
+    const isEmpty = !r.answers[q];
+    const cls = isEmpty ? 'empty' : isRight ? 'right' : 'wrong';
+    html += `<div class="answer-item ${cls}">
+      <div class="qn">Q${q}</div>
+      <div class="given">${given}</div>
+      <div class="correct-ans">✓${KEY[q]}</div>
+    </div>`;
+  }
+  html += `</div>`;
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14px">
+    <div><strong>Listening:</strong> ${r.listeningCorrect}/10</div>
+    <div><strong>Reading:</strong> ${r.readingCorrect}/15</div>
+    <div><strong>Nota final:</strong> ${r.grade.toFixed(1)}/5.0</div>
+    <div><strong>Tiempo:</strong> ${r.timeUsed} min</div>
+  </div>`;
+
+  document.getElementById('modalTitle').textContent = r.name;
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+}
+
+function uploadAudio(n, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    localStorage.setItem('tweetalig_audio'+n, e.target.result);
+    document.getElementById('audioBox'+n).classList.add('uploaded');
+    document.getElementById('audioStatus'+n).textContent = '✓ Audio cargado: ' + file.name;
+    document.getElementById('audioPreview'+n).innerHTML = `
+      <audio controls style="width:100%;margin-top:8px"><source src="${e.target.result}"></audio>
+      <button class="delete-audio-btn" onclick="deleteAudio(${n})">Eliminar audio</button>
+    `;
+  };
+  reader.readAsDataURL(file);
+}
+
+function loadAudioPreviews() {
+  [1,2].forEach(n => {
+    const src = localStorage.getItem('tweetalig_audio'+n);
+    if (src) {
+      document.getElementById('audioBox'+n).classList.add('uploaded');
+      document.getElementById('audioStatus'+n).textContent = '✓ Audio disponible';
+      document.getElementById('audioPreview'+n).innerHTML = `
+        <audio controls style="width:100%;margin-top:8px"><source src="${src}"></audio>
+        <button class="delete-audio-btn" onclick="deleteAudio(${n})">Eliminar audio</button>
+      `;
+    }
+  });
+}
+
+function deleteAudio(n) {
+  if (!confirm('¿Eliminar este audio? Los estudiantes ya no podrán escucharlo.')) return;
+  localStorage.removeItem('tweetalig_audio'+n);
+  document.getElementById('audioBox'+n).classList.remove('uploaded');
+  document.getElementById('audioStatus'+n).textContent = '';
+  document.getElementById('audioPreview'+n).innerHTML = '';
+}
+
+function resetResult() {
+  const id = prompt('Ingresa la cédula del estudiante cuyo resultado quieres borrar:');
+  if (!id) return;
+  let results = getResults();
+  const before = results.length;
+  results = results.filter(r => r.id !== id.trim());
+  if (results.length === before) { alert('No se encontró ese estudiante.'); return; }
+  localStorage.setItem('tweetalig_results', JSON.stringify(results));
+  alert('Resultado eliminado. El estudiante puede volver a presentar.');
+  initAdmin();
+}
+
+function exportCSV() {
+  const results = getResults();
+  if (!results.length) { alert('No hay resultados todavía.'); return; }
+  const header = 'Nombre,Cédula,Nota,Correctas,Listening,Reading,Tiempo (min),Fecha\n';
+  const rows = results.map(r => {
+    const date = new Date(r.submittedAt).toLocaleString('es-CO');
+    return `"${r.name}","${r.id}","${r.grade.toFixed(1)}","${r.correct}","${r.listeningCorrect}","${r.readingCorrect}","${r.timeUsed}","${date}"`;
+  }).join('\n');
+  const blob = new Blob(['\uFEFF'+header+rows], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'resultados_b1_1.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('detailModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('detailModal')) closeModal();
+});
+</script>
+</body>
+</html>
