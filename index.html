@@ -104,7 +104,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
       <label>Contraseña</label>
       <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="off" onpaste="return false" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <button class="login-btn" id="loginBtn" onclick="doLogin()">Entrar al examen</button>
+    <button class="login-btn" id="loginBtn" onclick="window.doLogin()">Entrar al examen</button>
     <div class="login-error" id="loginError">Cédula o contraseña incorrecta.</div>
   </div>
 </div>
@@ -126,11 +126,11 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="audio-title">🎧 Audio 1 – "A New Job"</div>
     <div class="audio-player-wrap">
       <div class="audio-controls-row">
-        <button class="play-btn" id="playBtn1" onclick="togglePlay(1)">▶</button>
+        <button class="play-btn" id="playBtn1" onclick="window.togglePlay(1)">▶</button>
         <span class="audio-time" id="audioTime1">0:00 / 0:00</span>
         <span class="play-info" id="playInfo1">Plays remaining: 3</span>
       </div>
-      <div class="progress-wrap" id="progressWrap1" onclick="seekAudio(1,event)">
+      <div class="progress-wrap" id="progressWrap1" onclick="window.seekAudio(1,event)">
         <div class="progress-fill" id="progressFill1"></div>
       </div>
     </div>
@@ -142,11 +142,11 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="audio-title">🎧 Audio 2 – "Healthy Lifestyle"</div>
     <div class="audio-player-wrap">
       <div class="audio-controls-row">
-        <button class="play-btn" id="playBtn2" onclick="togglePlay(2)">▶</button>
+        <button class="play-btn" id="playBtn2" onclick="window.togglePlay(2)">▶</button>
         <span class="audio-time" id="audioTime2">0:00 / 0:00</span>
         <span class="play-info" id="playInfo2">Plays remaining: 3</span>
       </div>
-      <div class="progress-wrap" id="progressWrap2" onclick="seekAudio(2,event)">
+      <div class="progress-wrap" id="progressWrap2" onclick="window.seekAudio(2,event)">
         <div class="progress-fill" id="progressFill2"></div>
       </div>
     </div>
@@ -173,7 +173,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
   <div class="submit-zone">
     <div class="answered-count">Answered: <span id="answeredCount">0</span> / 25</div>
-    <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+    <button class="submit-btn" onclick="window.submitExam()">Submit Exam</button>
   </div>
 </div>
 
