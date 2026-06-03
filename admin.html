@@ -183,7 +183,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const ADMIN_USER='admin', ADMIN_PASS='tweetalig2026';
+const ADMIN_USER='master', ADMIN_PASS='masterR123++';
 const TEACHER_USER='dalvarez', TEACHER_PASS='dalvarez123++';
 let currentRole=''; // 'admin' or 'teacher'
 
@@ -228,10 +228,10 @@ window.adminLogin=function(){
   }
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('adminScreen').style.display='block';
-  // Hide restricted tabs and buttons for teacher
-  if(currentRole==='teacher'){
-    document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
-  }
+  // Show all for master, hide restricted for teacher
+  document.querySelectorAll('.admin-only').forEach(el=>{
+    el.style.display = currentRole==='admin' ? '' : 'none';
+  });
   loadData();
   refreshInterval=setInterval(loadData,15000);
 };
