@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Migrar Estudiantes – Tweetalig</title>
+<style>
+body{font-family:sans-serif;max-width:600px;margin:3rem auto;padding:1rem;background:#f5f3ee}
+.card{background:#fff;border-radius:16px;padding:2rem;border:1px solid #e8e4db}
+h2{margin-bottom:1rem;font-size:20px}
+p{font-size:13px;color:#666;margin-bottom:1.5rem;line-height:1.6}
+button{padding:12px 28px;background:#2d6a4f;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
+button:disabled{background:#aaa;cursor:not-allowed}
+#log{margin-top:1.5rem;font-size:13px;font-family:monospace;background:#f5f3ee;border-radius:10px;padding:1rem;max-height:400px;overflow-y:auto;line-height:1.8}
+.ok{color:#166534}.err{color:#991b1b}.info{color:#555}
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>🔄 Migrar estudiantes a Firestore</h2>
+  <p>Este script carga todos los estudiantes existentes en la base de datos de Firebase. Ábrelo una sola vez, haz clic en el botón y listo. Después puedes cerrar esta página.</p>
+  <button id="btn" onclick="migrate()">Iniciar migración</button>
+  <div id="log"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCFORLDyxhFWSsINOujacYjCXC0mKXwjQs",
+  authDomain: "tweetalig-b1test.firebaseapp.com",
+  projectId: "tweetalig-b1test",
+  storageBucket: "tweetalig-b1test.firebasestorage.app",
+  messagingSenderId: "314442233744",
+  appId: "1:314442233744:web:2f1d5d6df1bd185002a515"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const STUDENTS = [
+  {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'Kx7#mP2q'},
+  {id:'1005661371',name:'Zulema Perez Guillin',pass:'Rn4$vL9w'},
+  {id:'1103100577',name:'Nawal Micheel Luna',pass:'Jt8@bQ3e'},
+  {id:'1005425859',name:'Diana Marcela Diaz Lezama',pass:'Wy5!cF6r'},
+  {id:'1100543192',name:'Katia Luz Hernández Campo',pass:'Pz2#hN8s'},
+  {id:'1103094427',name:'Jose Cuello Gale',pass:'Dm6$kT4u'},
+  {id:'1102148336',name:'Jannin Paredes Olivera',pass:'Xq9@gR7i'},
+  {id:'1007183002',name:'Kellys María Lopez Junieles',pass:'Lf3!jW5o'},
+  {id:'1047372554',name:'Julian Andres Mallarino Vivero',pass:'Vc8#nS2a'},
+  {id:'1052947945',name:'Malory Atencio',pass:'Ht4$pB6y'},
+  {id:'1102801466',name:'Nataly Marcela Manotas Hernández',pass:'Zk7@mD9z'},
+  {id:'1103496968',name:'Jesus David Perez Guillin',pass:'Qr5!wG3x'},
+  {id:'1100543917',name:'Juan Jose Navarro Monterroza',pass:'Nb2#vJ8c'},
+  {id:'1101441082',name:'Juleimis Berrio',pass:'Sf6$hK4v'},
+  {id:'1143409541',name:'Abrahan Caro Ortega',pass:'Ew9@tL7b'},
+  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'Mg3!qN5f'},
+  {id:'1005575869',name:'Joselin Michel Romero Lima',pass:'Bp4!xH7m'},
+  {id:'1005581611',name:'Rafael Ricardo Perez Silva',pass:'Tn8#wQ2k'},
+  {id:'1005425925',name:'Daniel Armando Angulo Atencia',pass:'Vf6$jL9r'},
+  {id:'1100623439',name:'Luisa Fernanda Ortega Novoa',pass:'Cx3@nM5p'},
+  {id:'1102877332',name:'Yoseb Alberto Santos Perez',pass:'Rh7!bK4s'},
+  {id:'64589579',name:'Patricia Velez Herrera',pass:'Gs2#tF8w'},
+  {id:'1103098344',name:'Ela Sofia Meneses Vergara',pass:'Dq9$vN3e'}
+];
+
+function log(msg, cls='info'){
+  const el=document.getElementById('log');
+  el.innerHTML+=`<div class="${cls}">${msg}</div>`;
+  el.scrollTop=el.scrollHeight;
+}
+
+window.migrate = async function(){
+  document.getElementById('btn').disabled=true;
+  log('Iniciando migración de '+STUDENTS.length+' estudiantes...');
+  let ok=0, err=0;
+  for(const s of STUDENTS){
+    try{
+      await setDoc(doc(db,'students',s.id),{
+        name:s.name, id:s.id, pass:s.pass,
+        createdAt:serverTimestamp()
+      },{merge:true});
+      log('✅ '+s.name,'ok');
+      ok++;
+    }catch(e){
+      log('❌ Error con '+s.name+': '+e.message,'err');
+      err++;
+    }
+  }
+  log(`\n🎉 Listo: ${ok} estudiantes migrados, ${err} errores.`,'ok');
+  log('Ya puedes cerrar esta página.','info');
+};
+</script>
+</body>
+</html>

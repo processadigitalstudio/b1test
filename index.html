@@ -210,32 +210,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const USERS=[
-  {id:'1103499194',name:'Hernan Enrique Román Naizzir',pass:'Kx7#mP2q'},
-  {id:'1005661371',name:'Zulema Perez Guillin',pass:'Rn4$vL9w'},
-  {id:'1103100577',name:'Nawal Micheel Luna',pass:'Jt8@bQ3e'},
-  {id:'1005425859',name:'Diana Marcela Diaz Lezama',pass:'Wy5!cF6r'},
-  {id:'1100543192',name:'Katia Luz Hernández Campo',pass:'Pz2#hN8s'},
-  {id:'1103094427',name:'Jose Cuello Gale',pass:'Dm6$kT4u'},
-  {id:'1102148336',name:'Jannin Paredes Olivera',pass:'Xq9@gR7i'},
-  {id:'1007183002',name:'Kellys María Lopez Junieles',pass:'Lf3!jW5o'},
-  {id:'1047372554',name:'Julian Andres Mallarino Vivero',pass:'Vc8#nS2a'},
-  {id:'1052947945',name:'Malory Atencio',pass:'Ht4$pB6y'},
-  {id:'1102801466',name:'Nataly Marcela Manotas Hernández',pass:'Zk7@mD9z'},
-  {id:'1103496968',name:'Jesus David Perez Guillin',pass:'Qr5!wG3x'},
-  {id:'1100543917',name:'Juan Jose Navarro Monterroza',pass:'Nb2#vJ8c'},
-  {id:'1101441082',name:'Juleimis Berrio',pass:'Sf6$hK4v'},
-  {id:'1143409541',name:'Abrahan Caro Ortega',pass:'Ew9@tL7b'},
-  {id:'1102576259',name:'Yeffith Zapata Lara',pass:'Mg3!qN5f'},
-  {id:'1005575869',name:'Joselin Michel Romero Lima',pass:'Bp4!xH7m'},
-  {id:'1005581611',name:'Rafael Ricardo Perez Silva',pass:'Tn8#wQ2k'},
-  {id:'1005425925',name:'Daniel Armando Angulo Atencia',pass:'Vf6$jL9r'},
-  {id:'1100623439',name:'Luisa Fernanda Ortega Novoa',pass:'Cx3@nM5p'},
-  {id:'1102877332',name:'Yoseb Alberto Santos Perez',pass:'Rh7!bK4s'},
-  {id:'64589579',name:'Patricia Velez Herrera',pass:'Gs2#tF8w'},
-  {id:'1103098344',name:'Ela Sofia Meneses Vergara',pass:'Dq9$vN3e'}
-];
-
 const LISTENING1_QS=[
   {text:'When did Mark start his new job?',correct:'Last month',opts:['Last week','Last month','Last year','Yesterday']},
   {text:'What type of company does Mark work for?',correct:'A technology company',opts:['A hospital','A school','A technology company','A bank']},
@@ -284,26 +258,33 @@ document.addEventListener('keydown',e=>{
 window.doLogin = async function(){
   const id=document.getElementById('loginId').value.trim();
   const pass=document.getElementById('loginPass').value.trim();
-  const user=USERS.find(u=>u.id===id&&u.pass===pass);
   const errEl=document.getElementById('loginError');
   const btn=document.getElementById('loginBtn');
-  if(!user){errEl.textContent='Cédula o contraseña incorrecta.';errEl.style.display='block';return;}
+  if(!id||!pass){errEl.textContent='Ingresa tu cédula y contraseña.';errEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='Verificando...';
   try{
-    const snap=await getDoc(doc(db,'results',id));
-    if(snap.exists()&&snap.data().status==='submitted'){
+    // Look up student in Firestore
+    const studentSnap=await getDoc(doc(db,'students',id));
+    if(!studentSnap.exists()||studentSnap.data().pass!==pass){
+      errEl.textContent='Cédula o contraseña incorrecta.';
+      errEl.style.display='block';btn.disabled=false;btn.textContent='Entrar al examen';return;
+    }
+    const studentData=studentSnap.data();
+    // Check if already submitted
+    const resultSnap=await getDoc(doc(db,'results',id));
+    if(resultSnap.exists()&&resultSnap.data().status==='submitted'){
       errEl.textContent='Ya presentaste este examen. No puedes volver a realizarlo.';
       errEl.style.display='block';btn.disabled=false;btn.textContent='Entrar al examen';return;
     }
-    currentUser=user;
+    currentUser={id,name:studentData.name};
     // Save session as in-progress
     await setDoc(doc(db,'results',id),{
-      id:user.id,name:user.name,status:'in-progress',
+      id,name:studentData.name,status:'in-progress',
       startedAt:serverTimestamp()
     },{merge:true});
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('examScreen').style.display='block';
-    document.getElementById('studentNameDisplay').textContent=user.name+' · '+user.id;
+    document.getElementById('studentNameDisplay').textContent=studentData.name+' · '+id;
     buildExam();
     initAudioListeners(1);initAudioListeners(2);
     startTimer();
